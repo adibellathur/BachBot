@@ -1,0 +1,27 @@
+html,body {
+  height: 100%;
+  background-color: #505262;
+  color: white;
+}
+
+#navbar {
+	background-color: #222430;
+	box-shadow: 0px 0px 3px black; 
+}
+
+a {
+	color: white;
+	text-align: center;
+}
+
+#coral-background {
+	background-color:#FF797A;
+}
+
+#main-window {
+	overflow: scroll;
+}
+
+#dashboard {
+	
+}
