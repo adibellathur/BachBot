@@ -9,6 +9,11 @@ html,body {
 	box-shadow: 0px 0px 3px black; 
 }
 
+#search{
+	overflow: hidden;
+    background-color: #e9e9e9;
+}
+
 a {
 	color: white;
 	text-align: center;
@@ -24,4 +29,39 @@ a {
 
 #dashboard {
 	
+}
+
+#w3-container{
+	background-color: #22242f;
+}
+
+form.example input[type=text] {
+    padding: 5px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 85%;
+    background: #f1f1f1;
+}
+
+form.example button {
+    float: left;
+    width: 15%;
+    padding: 5px;
+    background: #22242f;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+}
+
+form.example button:hover {
+    background: #16171e;
+}
+
+form.example::after {
+    content: "";
+    clear: both;
+    display: table;
 }
