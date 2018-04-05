@@ -13,11 +13,7 @@ app.on('ready', function() {
 	mainWindow = new BrowserWindow({width: 1100, height: 700});
 	//Load HTML
 	mainWindow.loadURL(url.format({
-<<<<<<< HEAD
-		pathname: path.join(__dirname, 'profileWindow.html'),
-=======
 		pathname: path.join(__dirname, 'html/index.html'),
->>>>>>> 7c9df77d62a756826966c858640166a82e9ad8b4
 		protocol: 'file:',
 		slashes: true
 	}));
