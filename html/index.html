@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="../MDB/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design for Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"> -->
+    <!-- Material Design Bootstrap -->
+    <link href="../MDB/css/mdbfull.min.css" rel="stylesheet">
+    <!-- My Stylesheet -->
+    <link rel="stylesheet" href="../css/index.css">
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <!-- Bootstrap Material CSS -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"> -->
+    <title>BachBot</title>
+  </head>
+  <body>
+    <div class="container-fluid h-100">
+      <div class="row justify-content-center h-100">
+
+        <!-- NavBar -->
+        <nav class="col-sm-2 navbar-fixed-left" id="navbar">
+          <div class="row h-25">User and Icon</div>
+          <div class="row h-25 justify-content-center">
+            <div class="col-sm-12 w-100">
+              <ul class="nav nav-pills flex-column">
+              <li class="nav-item"><a class="nav-link" data-toggle="pill" role="tab" href="#" onclick="loadBrowse()">Browse</a></li>
+              <li class="nav-item"><a class="nav-link" data-toggle="pill" role="tab" href="#" onClick="loadCreate()">Create</a></li>
+              <li class="nav-item"><a class="nav-link" data-toggle="pill" role="tab" href="#" onClick="loadYou()">You</a></li>
+            </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- Main Content Goes Here -->
+        <div class="col-sm-10 h-100" id="main-window">
+
+            <!-- Browse Window -->
+            <div class="content" id="Browse">
+              <h1>Browse</h1>
+            </div>
+
+            <!-- Create Window -->
+            <div class="content" id="Create">
+              <div class="row">
+                <h1>Create</h1>
+              </div>
+              <div class="card" style="background-color: #63657a">
+                <div class="card-body justify-content-around">
+                  <form class="dashboard" id="dashboard-form">
+                    <h2>Dashboard</h2>
+                    <div class="row" id="form">
+                      <div class="col-sm-4">
+                        <!-- Material input -->
+                        <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
+                          <input type="text" class="form-control" placeholder="Key" style="text-align: center">
+                        </div>
+                      </div>
+                      <div class="col-sm-4">
+                        2
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="switch">
+                          <label>
+                            <input type="checkbox" checked="checked">
+                            <span class="lever"></span>
+                            <p>Option One</p>
+                          </label>
+                          <br/>
+                          <label>
+                            <input type="checkbox" checked="checked">
+                            <span class="lever"></span>
+                            <p>Option Two</p>
+                          </label>
+                          <br/>
+                          <label>
+                            <input type="checkbox" checked="checked">
+                            <span class="lever"></span>
+                            <p>Option Three</p>
+                          </label>
+                          <br/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center">
+                      <!-- <a href="#" class="btn btn-primary" type="submit">Submit</a> -->
+                      <button type="submit">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- You Window -->
+            <div class="content" id="You">
+              <h1>You</h1>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="../MDB/js/jquery-3.2.1.min.js"></script>
+    <script>
+      try {
+          $ = jQuery = module.exports;
+          // If you want module.exports to be empty, uncomment:
+          // module.exports = {};
+      } catch(e) {}
+    </script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="../MDB/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="../MDB/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="../MDB/js/mdbfull.min.js"></script>
+    <!-- <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script> -->
+    <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+    <!-- My Script -->
+    <script src="../js/index.js"></script>
+    <script src="../js/dashboard.js"></script>
+
+  </body>
+</html>
