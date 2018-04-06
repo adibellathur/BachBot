@@ -10,7 +10,7 @@ let mainWindow;
 
 app.on('ready', function() {
 	//Create HTML file
-	mainWindow = new BrowserWindow({width: 1100, height: 700});
+	mainWindow = new BrowserWindow({width: 1100, height: 700}); //titleBarStyle: 'hidden'
 	//Load HTML
 	mainWindow.loadURL(url.format({
 		pathname: path.join(__dirname, 'html/index.html'),
