@@ -14,8 +14,15 @@
     <!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"> -->
     <!-- Material Design Bootstrap -->
     <link href="../MDB/css/mdbfull.min.css" rel="stylesheet">
+
+    <!-- W3Schools -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- My Stylesheet -->
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/profile_styles.css">
+    <link rel="stylesheet" href="../css/stream_styles.css">
 
     <!-- Bootstrap CSS -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
@@ -45,7 +52,19 @@
 
             <!-- Browse Window -->
             <div class="content" id="Browse">
-              <h1>Browse</h1>
+              <h1 class="display-3">Stream</h1>
+
+              <form class="example" action="/action_page.php">
+              <input type="text" placeholder="Search.." name="search">
+              <button type="submit"><i class="fa fa-search"></i></button>
+              </form>
+
+              <div class="w3-container">
+              <p>
+                <img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg" 
+                style="width:125px;height:125px;vertical-align: middle;">
+              </p>
+              </div>
             </div>
 
             <!-- Create Window -->
@@ -101,7 +120,16 @@
 
             <!-- You Window -->
             <div class="content" id="You">
-              <h1>You</h1>
+              <h1 class="display-3">
+            </h1>
+            <p style="text-align: left;"> 
+              <i><font size = "15" color= "white"> Carolina </font></i>
+              <i><font size = "15" color= #ef807e> Vaz </font></i>
+              
+              <img src="file:///Users/carolinavaz/Desktop/CarolinaVaz-058.jpeg" 
+              class="w3-circle" width="200" height="200" align= "left"/> 
+              
+            </p>
             </div>
         </div>
       </div>
