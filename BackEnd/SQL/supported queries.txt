@@ -1,0 +1,67 @@
+1. top songs (ranked by most favorites)
+2. all songs (alphabetical)
+3. song by title (alphabetical)
+4. song by artist (alphabetical)
+5. top artists (ranked by most followers)
+6. all artists (alphabetical)
+7. artist by name (alphabetical)
+8. log in (check if correct) return bool
+
+
+1. top songs DONE
+SELECT songs.title, users.username, songs.path, COUNT(favorites.song_id) AS favorites
+	FROM songs
+	JOIN users
+		ON users.id=songs.user_id
+	LEFT JOIN favorites
+		ON favorites.song_id=songs.id
+	GROUP BY songs.id;
+	
+2. all songs (alphabetical) DONE
+SELECT songs.title, users.username, songs.path, COUNT(favorites.song_id) AS favorites
+	FROM songs
+	JOIN users
+		ON users.id=songs.user_id
+	LEFT JOIN favorites
+		ON favorites.song_id=songs.id
+	GROUP BY songs.title;
+
+3. song by title (alphabetical) DONE
+SELECT songs.*, users.username
+	FROM songs
+	JOIN users
+		ON songs.user_id=users.id
+	WHERE songs.title LIKE '%SEARCH_TERM%'
+	ORDER BY songs.title;
+	
+4. song by artist (alphabetical) DONE
+SELECT songs.*, users.username
+	FROM songs
+	JOIN users
+		ON songs.user_id=users.id
+	WHERE username LIKE '%SEARCH_TERM%'
+	ORDER BY username;
+
+5. top artists (ordered by number of followers)
+SELECT user.*, COUNT(*) AS num_followers
+	FROM users
+	JOIN followers
+		ON followers.user_id=user.id
+	GROUP BY user.id
+	ORDER BY num_followers;
+
+6. all artists (alphabetical)
+SELECT users.*
+	FROM users
+	ORDER BY username;
+
+7. artist by name (alphabetical)
+SELECT users.*
+	FROM users
+	WHERE users.username LIKE '%SEARCH_TERM%'
+	ORDER BY username;
+	
+8. log in
+SELECT users.username, users.password
+	FROM users
+	WHERE users.username LIKE 'SEARCH_TERM';
