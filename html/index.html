@@ -20,9 +20,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- My Stylesheet -->
+    <!-- <link rel="stylesheet" href="../css/profile_styles.css"> -->
+    <!-- <link rel="stylesheet" href="../css/stream_styles.css"> -->
     <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/profile_styles.css">
-    <link rel="stylesheet" href="../css/stream_styles.css">
 
     <!-- Bootstrap CSS -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
@@ -40,9 +40,9 @@
           <div class="row h-25 justify-content-center">
             <div class="col-sm-12 w-100">
               <ul class="nav nav-pills flex-column">
-              <li class="nav-item"><a class="nav-link" data-toggle="pill" role="tab" href="#" onclick="loadBrowse()">Browse</a></li>
-              <li class="nav-item"><a class="nav-link" data-toggle="pill" role="tab" href="#" onClick="loadCreate()">Create</a></li>
-              <li class="nav-item"><a class="nav-link" data-toggle="pill" role="tab" href="#" onClick="loadYou()">You</a></li>
+              <li class="nav-item"><a class="nav-link waves-light" data-toggle="pill" role="tab" href="#" onclick="loadBrowse()">Browse</a></li>
+              <li class="nav-item"><a class="nav-link waves-effect" data-toggle="pill" role="tab" href="#" onClick="loadCreate()">Create</a></li>
+              <li class="nav-item"><a class="nav-link waves-effect" data-toggle="pill" role="tab" href="#" onClick="loadProfile()">Profile</a></li>
             </ul>
             </div>
           </div>
@@ -72,8 +72,9 @@
               <div class="row">
                 <h1>Create</h1>
               </div>
-              <div class="card" style="background-color: #63657a">
-                <div class="card-body justify-content-around">
+              <!-- <div class="card" style="background-color: #2b2e38">
+                <div class="card-body justify-content-around"> -->
+                <div id="dashboard">
                   <form class="dashboard" id="dashboard-form">
                     <h2>Dashboard</h2>
                     <div class="row" id="form">
@@ -101,8 +102,8 @@
                           </label>
                           <br/>
                           <label>
-                            <input type="checkbox" checked="checked">
-                            <span class="lever"></span>
+                            <input id="switch" type="checkbox" checked="checked">
+                            <span id="switch" class="lever"></span>
                             <p>Option Three</p>
                           </label>
                           <br/>
@@ -115,11 +116,12 @@
                     </div>
                   </form>
                 </div>
-              </div>
+                <!-- </div>
+              </div> -->
             </div>
 
             <!-- Profile Window -->
-            <div class="content" id="You">
+            <div class="content" id="Profile">
               <h1 class="display-3">
             </h1>
             <p style="text-align: left;">

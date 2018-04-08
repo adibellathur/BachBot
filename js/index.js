@@ -2,7 +2,7 @@ window.onload = start;
 
 function start() {
   if(sessionStorage.getItem("view") === null) {
-    sessionStorage.setItem("view", "You");
+    sessionStorage.setItem("view", "Create");
   }
   loadContent();
 }
@@ -36,8 +36,8 @@ function loadCreate() {
   loadContent();
 }
 
-function loadYou() {
-  console.log("you clicked");
-  sessionStorage.setItem("view", "You");
+function loadProfile() {
+  console.log("profile clicked");
+  sessionStorage.setItem("view", "Profile");
   loadContent();
 }

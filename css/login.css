@@ -1,0 +1,14 @@
+html,body {
+  height: 100%;
+  background-color: #242831; /*#505262;*/
+  color: white;
+}
+
+#card {
+  background-color: #2b2e38;
+}
+
+#button {
+  background-color: #2bbbad;
+  color: white;
+}
