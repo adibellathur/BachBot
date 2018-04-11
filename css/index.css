@@ -84,3 +84,7 @@ form {
 .switch label input[type=checkbox]:checked+.lever:after {
   background-color: red;
 }
+
+.row2{
+  background-color: #484a5d;
+}
