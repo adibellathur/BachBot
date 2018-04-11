@@ -10,10 +10,10 @@ function getMusic(params) {
   console.log(params);
 }
 
-
-var form = document.getElementById('dashboard-form');
-if (form.attachEvent) {
-    form.attachEvent("submit", validate);
-} else {
-    form.addEventListener("submit", validate);
-}
+// 
+// var form = document.getElementById('dashboard-form');
+// if (form.attachEvent) {
+//     form.attachEvent("submit", validate);
+// } else {
+//     form.addEventListener("submit", validate);
+// }

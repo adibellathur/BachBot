@@ -1,8 +1,10 @@
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
+const Store = require('electron-store');
 
 const {app, BrowserWindow} = electron;
+const store = new Store();
 
 let mainWindow;
 
@@ -18,7 +20,7 @@ app.on('ready', function() {
 	}); //titleBarStyle: 'hidden'
 	//Load HTML
 	mainWindow.loadURL(url.format({
-		pathname: path.join(__dirname, 'html/index.html'),
+		pathname: path.join(__dirname, 'html/login.html'),
 		protocol: 'file:',
 		slashes: true
 	}));
@@ -26,5 +28,7 @@ app.on('ready', function() {
 	mainWindow.once('ready-to-show', () => {
 		mainWindow.show()
 	});
+
+	console.log(app.getPath('userData'));
 
 });

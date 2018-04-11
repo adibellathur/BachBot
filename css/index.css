@@ -36,7 +36,7 @@ form {
 	background-color: #222430; /*#242831;*/
   border: 12px;
   border-color: #111;
-	/*box-shadow: 0px 0px 3px black;*/
+	box-shadow: 0px 0px 3px black;
 }
 
 #coral-background {
@@ -56,6 +56,11 @@ form {
 #switch {
   color: red;
   background-color: red;
+}
+
+#button {
+  background-color: #2bbbad;
+  color: white;
 }
 
 .dashboard {
