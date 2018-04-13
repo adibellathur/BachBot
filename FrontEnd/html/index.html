@@ -33,6 +33,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!-- Play Pause Buttons -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 
     <title>BachBot</title>
   </head>
@@ -59,103 +64,131 @@
         <!-- Main Content Goes Here -->
         <div class="col-sm-10 h-100" id="main-window">
 
+        <div class="topnav">
+          <div class="search-container">
+            <form action="/action_page.php">
+              <input type="text" placeholder="Search.." name="search">
+              <button type="submit"><i class="fa fa-search" style= "color: white;"></i></button>
+              <p></p>
+            </form>
+          </div>
+       </div>
+
             <!-- Stream Window -->
             <div class="content" id="Browse">
 
 
               <font size ="50" color= white>Stream</font>
               <!-- <form class="example" action="/action_page.php"> -->
-              <input type="text" placeholder="Search.." name="search" >
-              <button type="submit"><i class="fa fa-search"></i></button>
-              </form>
 
-              <p></p>
-              <i><h3>Top Songs</h3></i>
-              <p></p>
 
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="card bg-light" id="row1" >
-                    <h5 class="card-header" style="color:#22242f; font-size:200%;height: 10%"> <b> Musica </h5></b>
-                      <div class="card-body" style= "color: #484a5d;">
-                        <p></p>
-
-                        <div class="row" id="music">
-                          <div class="col-sm-3.5">
-                            <div class="w3-container">
-                              <style>
-                                p.ex1 {
-                                  margin-left: 10%;
-                                }
-                              </style>
-                              <p class="ex1">
-
-                              <button type="button" class="btn btn-primary bmd-btn-fab">
-                                <i class="fa fa-star"> </i>
-                              </button>
-                                <!-- <a class="btn-floating btn-lg purple-gradient"><i class="fa fa-bolt"></i></a> -->
-
-                                <!-- <img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
-                                style="width:100px;height:100px;vertical-align: middle;"> -->
-                              </p>
-                            </div>
-                          </div>
-                          <div class="col-sm-8.5">
-                            <audio controls >
-                            <style>
-                              audio { width: 430px; vertical-align: middle;}
-                            </style>
-                            </audio>
-                            <p></p>
-                            <!-- <a href="#" class="btn btn-primary" style="float: left;">Like </a> -->
-                            <p>
-
-                            </p>
-                          </div>
-                        </div>
+              <div class="container">
+                <h2>Top Songs</h2>
+                <p></p>            
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Song</th>
+                      <th>Composer</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>BachSong 1</td>
+                      <td>@jane</td>
+                      <td>
+                        <audio controls="controls">
+                        </audio>                  
+                      </td>
+                      <td>
+                        <span class="btn-group-sm">
+                          <button type="button" class="btn btn-primary bmd-btn-fab">
+                            <i class="fa fa-star"> </i>
+                          </button>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>BachSong 2</td>
+                      <td>@moe</td>
+                      <td>
+                        <audio controls="controls">
+                        </audio> 
+                      </td>
+                      <td>
+                        <span class="btn-group-sm">
+                          <button type="button" class="btn btn-primary bmd-btn-fab">
+                            <i class="fa fa-star"> </i>
+                          </button>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>BachSong 3</td>
+                      <td>@sooley</td>
+                      <td>
+                      <div class="onoffswitch3">
+                          <input type="checkbox" name="onoffswitch3" class="onoffswitch3-checkbox" id="myonoffswitch3" checked>
+                          <label class="onoffswitch3-label" for="myonoffswitch3">
+                              <span class="onoffswitch3-inner">
+                                  <span class="onoffswitch3-active"><span class="onoffswitch3-switch">Play</span></span>
+                                  <span class="onoffswitch3-inactive"><span class="onoffswitch3-switch">Pause</span></span>
+                              </span>
+                          </label>
                       </div>
-                  </div>
-                </div>
-
-                <div class="col-sm-6">
-                  <div class="card " id="row2">
-                    <h5 class="card-header" style="color:#22242f; font-size:200%; height: 50%"> <b>Song Title </h5></b>
-                      <div class="card-body ">
-                        <p></p>
-
-                        <div class="row" id="music">
-                          <div class="col-sm-3.5">
-                            <div class="w3-container">
-
-                              <style>
-                                p.ex1 {
-                                  margin-left: 10%;
-                                }
-                              </style>
-                              <p class="ex1">
-                                <button type="button" class="btn btn-primary bmd-btn-fab">
-                                  <i class="fa fa-star"> </i>
-                                </button>
-                                <!--<img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
-                                style="width:100px;height:100px;vertical-align: middle;"> -->
-                              </p>
-                            </div>
-                          </div>
-                          <div class="col-sm-8.5">
-                            <audio controls >
-                            <style>
-                              audio { width: 430px; vertical-align: center;}
-                            </style>
-                            </audio>
-                            <p></p>
-                            <!-- <a href="#" class="btn btn-primary" style="float: left;">Like </a> -->
-                            <p></p>
-                          </div>
-                        </div>
-                      </div>
-                  </div>
-                </div>
+                      </td>
+                      <td>
+                        <span class="btn-group-sm">
+                          <button type="button" class="btn btn-primary bmd-btn-fab">
+                            <i class="fa fa-star"> </i>
+                          </button>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
+
+                             
+               <!-- <p class="ex1">
+
+                <button type="button" class="btn btn-primary bmd-btn-fab">
+                  <i class="fa fa-star"> </i> -->
+               <!-- </button> -->
+                  <!-- <a class="btn-floating btn-lg purple-gradient"><i class="fa fa-bolt"></i></a> --> 
+
+                  <!-- <img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
+                  style="width:100px;height:100px;vertical-align: middle;"> -->
+                <!-- </p> -->
+            
+          
+                <!-- <audio controls > -->
+                <!-- <style>
+                  audio { width: 430px; vertical-align: middle;}
+                </style>
+                </audio>
+                <p></p> -->
+                <!-- <a href="#" class="btn btn-primary" style="float: left;">Like </a> -->
+                                
+                <!-- <p class="ex1">
+                  <button type="button" class="btn btn-primary bmd-btn-fab">
+                    <i class="fa fa-star"> </i>
+                  </button> -->
+                  <!--<img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
+                  style="width:100px;height:100px;vertical-align: middle;"> -->
+                <!-- </p> -->
+              
+            
+              <!-- <audio controls >
+              <style>
+                audio { width: 430px; vertical-align: center;}
+              </style>
+              </audio> -->
+                            
+
+                
             </div>
 
 
