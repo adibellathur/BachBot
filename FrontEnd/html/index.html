@@ -8,10 +8,10 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Bootstrap core CSS -->
     <link href="../MDB/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design for Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"> -->
+
     <!-- Material Design Bootstrap -->
     <link href="../MDB/css/mdbfull.min.css" rel="stylesheet">
 
@@ -26,13 +26,10 @@
 
     <!-- Bootstrap CSS -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <!-- Bootstrap Material CSS -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"> -->
 
     <!-- Profile Stuff-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
     <title>BachBot</title>
   </head>
@@ -42,10 +39,15 @@
 
         <!-- NavBar -->
         <nav class="col-sm-2 navbar-fixed-left" id="navbar">
-          <div class="row h-25">
-            <img id="userimage" style="height:80%; width:80%;"></img>
-            <div id="username"></div>
+          <div class="row h-25 justify-content-center">
+            <div class="col-sm-12" id="userspace">
+              <img class="img-circle" id="userimage" style="height:8em; width:8em;"></img>
+              <div>
+                <h4 id="username"></h4>
+              </div>
+            </div>
           </div>
+          <hr>
           <div class="row h-25 justify-content-center">
             <div class="col-sm-12 w-100">
               <ul class="nav nav-pills flex-column">
@@ -60,26 +62,16 @@
         <div class="col-sm-10 h-100" id="main-window">
 
             <!-- Stream Window -->
-            <div class="content" id="Browse">
-
-
+            <div class="content" id="Stream">
               <font size ="50" color= white>Stream</font>
-              <!-- <form class="example" action="/action_page.php"> -->
               <input type="text" placeholder="Search.." name="search" >
               <button type="submit"><i class="fa fa-search"></i></button>
-              </form>
-
-              <p></p>
               <i><h3>Top Songs</h3></i>
-              <p></p>
-
               <div class="row">
                 <div class="col-sm-6">
-                  <div class="card bg-light" id="row1" >
+                  <div class="card" id="row1" >
                     <h5 class="card-header" style="color:#22242f; font-size:200%;height: 10%"> <b> Musica </h5></b>
                       <div class="card-body" style= "color: #484a5d;">
-                        <p></p>
-
                         <div class="row" id="music">
                           <div class="col-sm-3.5">
                             <div class="w3-container">
@@ -89,7 +81,6 @@
                                 }
                               </style>
                               <p class="ex1">
-
                               <button type="button" class="btn btn-primary bmd-btn-fab">
                                 <i class="fa fa-star"> </i>
                               </button>
@@ -109,7 +100,6 @@
                             <p></p>
                             <!-- <a href="#" class="btn btn-primary" style="float: left;">Like </a> -->
                             <p>
-
                             </p>
                           </div>
                         </div>
@@ -158,57 +148,159 @@
               </div>
             </div>
 
+            <!-- Browse Window -->
+            <div class="content" id="Browse">
+              <div class="row h-100">
+                <div class="col-sm-6">
+                  <h1>Browse</h1>
+                </div>
+                <div class="col-sm-6">
+                  <form class="form-inline  waves-light" id="searchbar" mdbRippleRadius>
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <button class="btn btn-primary" id="button" type="submit">
+                      <i class="fa fa-search"> </i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <h2>Top Songs</h2>
+                  <div class="card">
+                    <div class="card-body">
+                      <p>You have no internet connection. Connect to the internet and try again</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br/>
+              <hr>
+              <div class="row">
+                <div class="col-sm-12">
+                  <h2>Top Artists</h2>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col -sm-6">
+                          <ul class="list-group" id="top-users-1">
+                            <!-- users 1-5 go here -->
+                          </ul>
+                        </div>
+                        <div class="col-sm-6">
+                          <ul class="list-group" id="top-users-2">
+                            <!-- users 6-10 go here -->
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <br>
+                <br>
+              </div>
+            </div>
+
+            <!-- Search Window -->
+            <div class="content" id="Search">
+              <div class="row h-100">
+                <div class="col-sm-6">
+                  <h1>Search</h1>
+                </div>
+                <div class="col-sm-6">
+                  <form class="form-inline  waves-light" id="searchbar" mdbRippleRadius onsubmit="return validateSearch()">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" id="searchbar">
+                    <button class="btn btn-primary" id="button" type="submit">
+                      <i class="fa fa-search"> </i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <h2>Top Songs</h2>
+                  <div class="card">
+                    <div class="card-body">
+                      <p>You have no internet connection. Connect to the internet and try again</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <br>
+                <br>
+              </div>
+            </div>
+
 
             <!-- Create Window -->
             <div class="content" id="Create">
               <div class="row">
                 <h1>Create</h1>
               </div>
-              <!-- <div class="card" style="background-color: #2b2e38">
-                <div class="card-body justify-content-around"> -->
-                <div id="dashboard">
-                  <form class="dashboard" id="dashboard-form">
-                    <h2>Dashboard</h2>
-                    <div class="row" id="form">
-                      <div class="col-sm-4">
-                        <!-- Material input -->
-                        <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
-                          <input type="text" class="form-control" placeholder="Key" style="text-align: center">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div id="dashboard">
+                    <form class="dashboard" id="dashboard-form" onsubmit="return validateDashboard()">
+                      <h2>Dashboard</h2>
+                      <div class="row" id="form">
+                        <div class="col-sm-4">
+                          <!-- Material input -->
+                          <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
+                            <input type="text" class="form-control" id="key-signature" placeholder="Key" style="text-align: center">
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
+                            <input type="text" class="form-control" id="tempo" placeholder="Tempo" style="text-align: center">
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="switch">
+                            <label>
+                              <input type="checkbox" checked="checked" id="option1">
+                              <span class="lever"></span>
+                              <p>Option One</p>
+                            </label>
+                            <br/>
+                            <label>
+                              <input type="checkbox" checked="checked" id="option2">
+                              <span class="lever"></span>
+                              <p>Option Two</p>
+                            </label>
+                            <br/>
+                            <label>
+                              <input type="checkbox" checked="checked" id="option3">
+                              <span class="lever"></span>
+                              <p>Option Three</p>
+                            </label>
+                            <br/>
+                          </div>
                         </div>
                       </div>
-                      <div class="col-sm-4">
-                        2
+                      <div class="row justify-content-center">
+                        <button class="btn btn-primary" id="button" type="submit">Submit</button>
                       </div>
-                      <div class="col-sm-4">
-                        <div class="switch">
-                          <label>
-                            <input type="checkbox" checked="checked">
-                            <span class="lever"></span>
-                            <p>Option One</p>
-                          </label>
-                          <br/>
-                          <label>
-                            <input type="checkbox" checked="checked">
-                            <span class="lever"></span>
-                            <p>Option Two</p>
-                          </label>
-                          <br/>
-                          <label>
-                            <input id="switch" type="checkbox" checked="checked">
-                            <span id="switch" class="lever"></span>
-                            <p>Option Three</p>
-                          </label>
-                          <br/>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row justify-content-center">
-                      <button class="btn btn-primary" id="button" type="submit">Submit</button>
-                    </div>
-                  </form>
+                    </form>
+                  </div>
                 </div>
-                <!-- </div>
-              </div> -->
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div id="results" class="card">
+                    <div class="card-body">
+                      <h1>Results</h1>
+                      <p>You have no generated music yet.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <!-- insert stuff herer  -->
+                </div>
+              </div>
             </div>
 
             <!-- Profile Window -->
@@ -266,34 +358,42 @@
               </tbody>
               </table>
             </div>
-
-
-
             </div>
-
         </div>
       </div>
     </div>
     <!-- SCRIPTS -->
     <!-- JQuery -->
     <script type="text/javascript" src="../MDB/js/jquery-3.2.1.min.js"></script>
-    <script>
+    <!-- <script>
       try {
           $ = jQuery = module.exports;
           // If you want module.exports to be empty, uncomment:
           // module.exports = {};
       } catch(e) {}
+    </script> -->
+    <script>
+      window.jQuery = window.$ = require('jquery');
     </script>
+
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="../MDB/js/popper.min.js"></script>
+
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="../MDB/js/bootstrap.min.js"></script>
+
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="../MDB/js/mdbfull.min.js"></script>
+
     <!-- <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script> -->
     <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+
+    <!-- MidiJS -->
+    <!-- <script type='text/javascript' src='https://www.midijs.net/lib/midi.js'></script> -->
+
     <!-- My Script -->
     <script src="../js/index.js"></script>
+    <script src="../js/search.js"></script>
     <script src="../js/dashboard.js"></script>
 
   </body>

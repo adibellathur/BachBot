@@ -3,21 +3,12 @@
   cleans up input, requires email, and if email and password
   are valid it sends you to your profile page;
 )*/
-// const {remote} = require('electron');
-// const store = new Store();
-
-// const store = window.localStorage;
-var fs = require("fs");
+const Store = require('electron-store');
+const store = new Store();
 var userdata = require(__dirname + "/user.json");
+var fs = require("fs");
 
-// fs.readFile(__dirname + '/user.json', function (err, data) {
-//    if (err) {
-//       return console.error(err);
-//    }
-//    json = JSON.parse(data);
-//    console.log(json);
-// });
-//validateForm();
+
 console.log(userdata);
 
 function validateForm() {
@@ -29,12 +20,9 @@ function validateForm() {
   if(username == "" || password == "") {
     return false;
   } else {
-    // store.setItem("username", "Guest");
-    // store.setItem("userimage", __dirname + "../image/guest.png");
-    // console.log(store.getItem("username"));
-    // remote.getGlobal('username') = "Guest";
-    // remote.getGlobal('userimage') = __dirname + "../image/guest.png";
-    // console.log(remote.getGlobal('userimage'));
+    store.set("username", "Guest");
+    store.set("userimage", __dirname + "/../image/guest.png");
+    console.log(store.get("username"));
     userdata.username = username;
     fs.writeFileSync(__dirname + '/user.json', JSON.stringify(userdata));
     // sleep(10000);

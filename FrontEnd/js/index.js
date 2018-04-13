@@ -5,7 +5,8 @@
 */
 
 //Run this on startup
-
+const Store = require('electron-store');
+const store = new Store();
 var userdata = require(__dirname + "/user.json");
 
 
@@ -17,6 +18,7 @@ function start() {
   }
   loadContent();
   loadUser();
+  loadBrowseContent();
 }
 
 function loadContent() {
@@ -40,6 +42,34 @@ function loadBrowse() {
   console.log("browse clicked");
   sessionStorage.setItem("view", "Browse");
   loadContent();
+  loadBrowseContent();
+}
+
+function loadBrowseContent() {
+  $.ajax({
+    url: 'https://jsonplaceholder.typicode.com/users',
+    data: {
+      format: 'json'
+    },
+    error: function() {
+      $('#info').html('<p>An error has occurred</p>');
+    },
+    dataType: 'jsonp',
+    success: function(data) {
+      document.getElementById("top-users-1").innerHTML = "";
+      document.getElementById("top-users-2").innerHTML  = "";
+      for(var i=0 ; i<10 ; i++) {
+        var user = data[i];
+        console.log(user.name);
+        if(i / 5 < 1) {
+          document.getElementById("top-users-1").innerHTML += "<li class=\"list-group-item\"><h4>" + (i+1) + ". " + user.name + "</h4></li>";
+        } else {
+          document.getElementById("top-users-2").innerHTML += "<li class=\"list-group-item\"><h4>" + (i+1) + ". " + user.name + "</h4></li>";
+        }
+      }
+    },
+    type: 'GET'
+  });
 }
 
 function loadCreate() {
@@ -55,7 +85,6 @@ function loadProfile() {
 }
 
 function loadUser() {
-  //store.setItem('username', 'guest');
-  document.getElementById("userimage").src = userdata.userimage; //store.getItem("userimage");
-  document.getElementById("username").innerHTML = userdata.username;  //store.getItem("username");
+  document.getElementById("userimage").src = store.get("userimage");  //userdata.userimage;
+  document.getElementById("username").innerHTML = store.get("username");  //userdata.username;
 }
