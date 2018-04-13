@@ -1,3 +1,4 @@
+package queries;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-@WebServlet("/songByUser")
-public class songByUser extends HttpServlet {
+import model.Song;
+
+@WebServlet("/songByTitle")
+public class songByTitle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,7 +35,7 @@ public class songByUser extends HttpServlet {
 					"	FROM songs\r\n" + 
 					"	JOIN users\r\n" + 
 					"		ON songs.user_id=users.id\r\n" + 
-					"	WHERE users.username LIKE '%" + request.getParameter("search") + "%'\r\n" + 
+					"	WHERE songs.title LIKE '%" + request.getParameter("search") + "%'\r\n" + 
 					"	ORDER BY songs.title;");
 			while(rs.next()) {
 				String title = rs.getString("title");

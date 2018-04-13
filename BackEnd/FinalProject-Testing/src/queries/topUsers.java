@@ -1,3 +1,4 @@
+package queries;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-@WebServlet("/allSongs")
-public class allSongs extends HttpServlet {
+import model.Song;
+
+@WebServlet("/topUsers")
+public class topUsers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,13 +31,12 @@ public class allSongs extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			st = conn.createStatement();
-			rs = st.executeQuery("SELECT songs.title, users.username, songs.path, COUNT(favorites.song_id) AS favorites\r\n" + 
+			rs = st.executeQuery("SELECT songs.*, users.username, COUNT(favorites.song_id) AS favorites\r\n" + 
 					"	FROM songs\r\n" + 
 					"	JOIN users\r\n" + 
-					"		ON users.id=songs.user_id\r\n" + 
-					"	LEFT JOIN favorites\r\n" + 
-					"		ON favorites.song_id=songs.id\r\n" + 
-					"	GROUP BY songs.title;");
+					"		ON songs.user_id=users.id\r\n" + 
+					"	WHERE songs.title LIKE '%" + request.getParameter("search") + "%'\r\n" + 
+					"	ORDER BY songs.title;");
 			while(rs.next()) {
 				String title = rs.getString("title");
 				String path = rs.getString("path");
