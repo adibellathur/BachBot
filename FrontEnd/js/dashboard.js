@@ -22,14 +22,26 @@ function validateDashboard(form) {
 
 function getMusic(params) {
   console.log(params);
-  // $.ajax({
-  //   url: '',
-  //   data: { format: 'json' },
-  //   error: function() {
-  //     $('#info').html('<p>An error has occurred</p>');
-  //   },
-  //   dataType: 'jsonp',
-  //   success: function(data) { },
-  //   type: 'GET'
-  // });
+  $.ajax({
+    url: 'http://localhost:8080/CSCI201-FinalProject/allSongs',
+    data: { format: 'json' },
+    error: function(xhr, status, err) {
+      console.log("ERROR " + status + "YOU MORON: " + err);
+    },
+    dataType: 'json',
+    success: function(data) {
+      // url = "http://localhost:8080/CSCI201-FinalProject/Mii_Channel.mid";
+      url = "http://localhost:8080/CSCI201-FinalProject/Michael_Jackson-Billie_Jean.midi";
+      if(data[0].title == 'Ben1') {
+        console.log(data[0]);
+        document.getElementById("dashboard-results").innerHTML = "<a href=\"#\" onClick=\"MIDIjs.play('" + url + "');\">Play Billie Jean</a>"
+        //playMidi(url);
+      }
+    },
+    type: 'GET'
+  });
+}
+
+function playMidi(url){
+  MIDIjs.play(url);
 }

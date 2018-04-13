@@ -30,7 +30,8 @@
     <!-- Profile Stuff-->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-
+    <!-- MidiJS -->
+    <script type='text/javascript' src='http://www.midijs.net/lib/midi.js'></script>
     <title>BachBot</title>
   </head>
   <body>
@@ -56,6 +57,11 @@
               <li class="nav-item"><a class="nav-link waves-effect" data-toggle="pill" role="tab" href="#" onClick="loadProfile()">Profile</a></li>
             </ul>
             </div>
+          </div>
+          <div class="row h-25">
+          </div>
+          <div class="row h-25 justify-content-center">
+            <a href="#" onClick="MIDIjs.stop();">Stop MIDI Playback</a>
           </div>
         </nav>
         <!-- Main Content Goes Here -->
@@ -116,7 +122,6 @@
                         <div class="row" id="music">
                           <div class="col-sm-3.5">
                             <div class="w3-container">
-
                               <style>
                                 p.ex1 {
                                   margin-left: 10%;
@@ -292,13 +297,10 @@
                     <div class="card-body">
                       <h1>Results</h1>
                       <p>You have no generated music yet.</p>
+                      <div id="dashboard-results">
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <!-- insert stuff herer  -->
                 </div>
               </div>
             </div>
@@ -395,6 +397,7 @@
     <script src="../js/index.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/dashboard.js"></script>
+    <script src="../js/playMusic.js"></script>
 
   </body>
 </html>
