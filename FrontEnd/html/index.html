@@ -28,6 +28,12 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
     <!-- Bootstrap Material CSS -->
     <!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"> -->
+
+    <!-- Profile Stuff-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
     <title>BachBot</title>
   </head>
   <body>
@@ -36,7 +42,10 @@
 
         <!-- NavBar -->
         <nav class="col-sm-2 navbar-fixed-left" id="navbar">
-          <div class="row h-25">User and Icon</div>
+          <div class="row h-25">
+            <img id="userimage" style="height:80%; width:80%;"></img>
+            <div id="username"></div>
+          </div>
           <div class="row h-25 justify-content-center">
             <div class="col-sm-12 w-100">
               <ul class="nav nav-pills flex-column">
@@ -52,20 +61,103 @@
 
             <!-- Stream Window -->
             <div class="content" id="Browse">
-              <h1 class="display-3">Stream</h1>
 
-              <form class="example" action="/action_page.php">
-              <input type="text" placeholder="Search.." name="search">
+
+              <font size ="50" color= white>Stream</font>
+              <!-- <form class="example" action="/action_page.php"> -->
+              <input type="text" placeholder="Search.." name="search" >
               <button type="submit"><i class="fa fa-search"></i></button>
               </form>
 
-              <div class="w3-container">
-              <p>
-                <img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
-                style="width:125px;height:125px;vertical-align: middle;">
-              </p>
+              <p></p>
+              <i><h3>Top Songs</h3></i>
+              <p></p>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="card bg-light" id="row1" >
+                    <h5 class="card-header" style="color:#22242f; font-size:200%;height: 10%"> <b> Musica </h5></b>
+                      <div class="card-body" style= "color: #484a5d;">
+                        <p></p>
+
+                        <div class="row" id="music">
+                          <div class="col-sm-3.5">
+                            <div class="w3-container">
+                              <style>
+                                p.ex1 {
+                                  margin-left: 10%;
+                                }
+                              </style>
+                              <p class="ex1">
+
+                              <button type="button" class="btn btn-primary bmd-btn-fab">
+                                <i class="fa fa-star"> </i>
+                              </button>
+                                <!-- <a class="btn-floating btn-lg purple-gradient"><i class="fa fa-bolt"></i></a> -->
+
+                                <!-- <img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
+                                style="width:100px;height:100px;vertical-align: middle;"> -->
+                              </p>
+                            </div>
+                          </div>
+                          <div class="col-sm-8.5">
+                            <audio controls >
+                            <style>
+                              audio { width: 430px; vertical-align: middle;}
+                            </style>
+                            </audio>
+                            <p></p>
+                            <!-- <a href="#" class="btn btn-primary" style="float: left;">Like </a> -->
+                            <p>
+
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="card " id="row2">
+                    <h5 class="card-header" style="color:#22242f; font-size:200%; height: 50%"> <b>Song Title </h5></b>
+                      <div class="card-body ">
+                        <p></p>
+
+                        <div class="row" id="music">
+                          <div class="col-sm-3.5">
+                            <div class="w3-container">
+
+                              <style>
+                                p.ex1 {
+                                  margin-left: 10%;
+                                }
+                              </style>
+                              <p class="ex1">
+                                <button type="button" class="btn btn-primary bmd-btn-fab">
+                                  <i class="fa fa-star"> </i>
+                                </button>
+                                <!--<img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
+                                style="width:100px;height:100px;vertical-align: middle;"> -->
+                              </p>
+                            </div>
+                          </div>
+                          <div class="col-sm-8.5">
+                            <audio controls >
+                            <style>
+                              audio { width: 430px; vertical-align: center;}
+                            </style>
+                            </audio>
+                            <p></p>
+                            <!-- <a href="#" class="btn btn-primary" style="float: left;">Like </a> -->
+                            <p></p>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
               </div>
             </div>
+
 
             <!-- Create Window -->
             <div class="content" id="Create">
@@ -111,8 +203,7 @@
                       </div>
                     </div>
                     <div class="row justify-content-center">
-                      <!-- <a href="#" class="btn btn-primary" type="submit">Submit</a> -->
-                      <button type="submit">Submit</button>
+                      <button class="btn btn-primary" id="button" type="submit">Submit</button>
                     </div>
                   </form>
                 </div>
@@ -125,14 +216,61 @@
               <h1 class="display-3">
             </h1>
             <p style="text-align: left;">
-              <i><font size = "15" color= "white"> Carolina </font></i>
-              <i><font size = "15" color= #ef807e> Vaz </font></i>
 
-              <img src="../image/CarolinaVaz-058.jpeg"
-              class="w3-circle" width="200" height="200" align= "left"/>
+              <!-- <i><font size = "15" color= "white"> Carolina </font></i>
+              <i><font size = "15" color= #ef807e> Vaz </font></i> -->
 
-            </p>
+            <div class="row">
+              <div class="col-sm-2.7">
+                <img src="../image/CarolinaVaz-058.jpeg"
+                  class="w3-circle" width="200" height="200" align= "left"/>
+              </div>
+              <div class="col-sm-9.3">
+                <p style="text-align: left;">
+                  <i><font size = "20" color= "white"> Carolina </font></i>
+                  <i><font size = "20" color= #ef807e> Vaz </font></i>
+                  <font size = "5" color = #2bbbad> @carolinavaz </font>
+                </p>
+                <p style="text-align: left;">
+                </p>
+              </div>
             </div>
+            </p>
+
+            <div class="container">
+              <h2>Saved Songs</h2>
+                <p></p>
+              <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Song Name 1</td>
+                  <td> </td>
+                  <td>Play/Pause Remove Button</td>
+                </tr>
+                <tr>
+                  <td>Song Name 2</td>
+                  <td> </td>
+                  <td>Play/Pause Remove Button</td>
+                </tr>
+                <tr>
+                  <td>Song Name 3</td>
+                  <td>              </td>
+                  <td>Play/Pause Remove Button</td>
+                </tr>
+              </tbody>
+              </table>
+            </div>
+
+
+
+            </div>
+
         </div>
       </div>
     </div>

@@ -1,3 +1,14 @@
+/*
+  Main Window:
+  Handles window interaction and moving between pages,
+  as well as persistent storage of useful data
+*/
+
+//Run this on startup
+
+var userdata = require(__dirname + "/user.json");
+
+
 window.onload = start;
 
 function start() {
@@ -5,6 +16,7 @@ function start() {
     sessionStorage.setItem("view", "Create");
   }
   loadContent();
+  loadUser();
 }
 
 function loadContent() {
@@ -40,4 +52,10 @@ function loadProfile() {
   console.log("profile clicked");
   sessionStorage.setItem("view", "Profile");
   loadContent();
+}
+
+function loadUser() {
+  //store.setItem('username', 'guest');
+  document.getElementById("userimage").src = userdata.userimage; //store.getItem("userimage");
+  document.getElementById("username").innerHTML = userdata.username;  //store.getItem("username");
 }
