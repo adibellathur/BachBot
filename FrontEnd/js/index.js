@@ -14,7 +14,7 @@ window.onload = start;
 
 function start() {
   if(sessionStorage.getItem("view") === null) {
-    sessionStorage.setItem("view", "Create");
+    sessionStorage.setItem("view", "Browse");
   }
   loadContent();
   loadUser();
@@ -114,6 +114,25 @@ function loadProfile() {
 function loadProfileContent() {
   document.getElementById("userimage-profile").src = store.get("userimage");
   document.getElementById("username-profile").innerHTML = store.get("username");
+
+  document.getElementById("profile-followers").innerHTML = "7";
+  document.getElementById("profile-following").innerHTML = "4";
+  document.getElementById("profile-saved").innerHTML = "12";
+
+  var html = "";
+  for(var i=1 ; i<=12 ; i++) {
+    html += "<tr>";
+    html += "<td>" + i + ". </td>";
+    html += "<td> SongName" + i + "</td>";
+    html += "<td><button type=\"button\" id=\"button-play\" class=\"btn btn-primary btn-lg\" onclick=\"buttonPlayPress()\">"
+          + "Play <i class=\"fa fa-play\"> </i></button>";
+    // html += "<button type=\"button\" id=\"button_stop\" class=\"btn btn btn-primary btn-lg\" onclick=\"buttonStopPress()\">"
+    //       + "Pause <i class=\"fa fa-stop\"></i></button></td>";
+    html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"buttonSavePress()\">"
+          + "<i>Save</i></button>";
+    html += "</tr>"
+  }
+  document.getElementById("profile-saved-songs").innerHTML = html;
 }
 
 function loadUser() {
