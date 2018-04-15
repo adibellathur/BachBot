@@ -197,7 +197,7 @@ body {
     padding: 14px;
   }
   .topnav input[type=text] {
-    border: 1px solid #ccc;  
+    border: 1px solid #ccc;
   }
 }
 
@@ -242,8 +242,8 @@ body {
 }
 
 .onoffswitch3-switch {
-    display: block; width: 50%; margin: 0px; text-align: center; 
-    border: 0px solid #999999;border-radius: 0px; 
+    display: block; width: 50%; margin: 0px; text-align: center;
+    border: 0px solid #999999;border-radius: 0px;
     position: absolute; top: 0; bottom: 0;
 }
 .onoffswitch3-active .onoffswitch3-switch {
@@ -255,13 +255,6 @@ body {
 .onoffswitch3-checkbox:checked + .onoffswitch3-label .onoffswitch3-inner {
     margin-left: 0;
 }
-
-
-
-
-
-
-
 
 
 
