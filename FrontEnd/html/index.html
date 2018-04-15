@@ -28,10 +28,19 @@
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 
     <!-- Profile Stuff-->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
     <!-- MidiJS -->
     <script type='text/javascript' src='http://www.midijs.net/lib/midi.js'></script>
+
+
+
     <title>BachBot</title>
   </head>
   <body>
@@ -428,29 +437,48 @@
               <h2>Saved Songs</h2>
                 <p></p>
               <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Song Name 1</td>
+                    <td> </td>
+                    <td>
+                      <button type="button" id="button_play" class="btn btn-primary btn-lg" onclick='buttonPlayPress()'>
+                        Play <i class="fa fa-play"> </i>
+                      </button>
 
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Song Name 1</td>
-                  <td> </td>
-                  <td>Play/Pause Remove Button</td>
-                </tr>
-                <tr>
-                  <td>Song Name 2</td>
-                  <td> </td>
-                  <td>Play/Pause Remove Button</td>
-                </tr>
-                <tr>
-                  <td>Song Name 3</td>
-                  <td>              </td>
-                  <td>Play/Pause Remove Button</td>
-                </tr>
-              </tbody>
+                      <button type="button" id="button_stop" class="btn btn btn-primary btn-lg" onclick='buttonStopPress()'>
+                             Pause <i class="fa fa-stop"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <div style="position:relative;left:50px">
+                        <a href="#" class="btn btn-primary btn-lg">
+                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                          <span>Remove</span>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Song Name 2</td>
+                    <td> </td>
+                    <td>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Song Name 3</td>
+                    <td> </td>
+                    <td>
+
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
             </div>
