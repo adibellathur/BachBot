@@ -20,7 +20,7 @@ app.on('ready', function() {
 	}); //titleBarStyle: 'hidden'
 	//Load HTML
 	mainWindow.loadURL(url.format({
-		pathname: path.join(__dirname, 'html/login.html'),
+		pathname: path.join(__dirname, 'html/homepage.html'),
 		protocol: 'file:',
 		slashes: true
 	}));

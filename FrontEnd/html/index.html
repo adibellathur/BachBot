@@ -266,9 +266,15 @@
               </div>
               <div class="row">
                 <div class="col-sm-12">
-                  <h2>Top Songs</h2>
+                  <h2>Songs</h2>
                   <div class="card">
-                    <div class="card-body" id="search-results">
+                    <div class="card-body" id="search-results-songs">
+                      <p>You have no internet connection. Connect to the internet and try again</p>
+                    </div>
+                  </div>
+                  <h2>Users</h2>
+                  <div class="card">
+                    <div class="card-body" id="search-results-users">
                       <p>You have no internet connection. Connect to the internet and try again</p>
                     </div>
                   </div>
@@ -367,8 +373,8 @@
                   <h1>Profile</h1>
                 </div>
                 <div class="col-sm-6">
-                  <form class="form-inline  waves-light" id="searchbar" onsubmit="return validateSearch(3)" mdbRippleRadius>
-                    <input class="form-control mr-sm-2" id="searchbar-input-3" type="text" placeholder="Search">
+                  <form class="form-inline  waves-light" id="searchbar" onsubmit="return validateSearch(4)" mdbRippleRadius>
+                    <input class="form-control mr-sm-2" id="searchbar-input-4" type="text" placeholder="Search">
                     <button class="btn btn-primary" id="button" type="submit">
                       <i class="fa fa-search"> </i>
                     </button>
@@ -376,12 +382,50 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-2.7">
                   <img class="w3-circle" id="userimage-profile" width="200" height="200"/>   <!--src="../image/CarolinaVaz-058.jpeg"-->
                 </div>
                 <div class="col-sm-9">
-                  <h2 id="username-profile"></h2>
-                  <h2>@me</h2>
+                  <div class="row">
+                    <h2 id="username-profile"></h2>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="card" style="margin: 0;">
+                        <div class="card-body">
+                          <h6>Followers: </h6>
+                          <h4 id="profile-followers"></h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="card" style="margin: 0;">
+                        <div class="card-body">
+                          <h6>Following: </h6>
+                          <h4 id="profile-following"></h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="card" style="margin: 0;">
+                        <div class="card-body">
+                          <h6>Saved Songs: </h6>
+                          <h4 id="profile-saved"></h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <h2>Saved Songs</h2>
+                  <div>
+                    <table class="table table-striped">
+                      <tbody id="profile-saved-songs">
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -430,7 +474,8 @@
                   </div>
                 </div>
               </div>
-
+                <div class="row">
+              </div>
             </div>
             </p>
 
