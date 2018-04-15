@@ -9,6 +9,9 @@ const store = new Store();
 function validateForm() {
   console.log("You are in the validate page");
   var username = document.getElementById("materialFormLoginUsername").value;
+  var username_split = username.split("@");
+  console.log(username_split[0]);
+  username = username_split[0];
   var password = document.getElementById("materialFormLoginPassword").value;
   var valid = false;
   console.log("username: " + username + ", password: " + password);
@@ -19,30 +22,31 @@ function validateForm() {
       url: 'http://localhost:8080/CSCI201-FinalProject/login',
       data: {
         format: 'json',
-        'username': username
+        'username': username,
+        'password': password
       },
       error: function() {
         $('#info').html('<p>An error has occurred</p>');
+        console.log("this is wrong");
       },
       dataType: 'json',
       success: function(data) {
         console.log("SUCCESS");
         console.log(data);
-        valid = data;
-        store.set("username", "Guest");
-        store.set("userimage", "../image/guest.png");
-        console.log(store.get("userimage"));
-        console.log("-" + username + "-");
-        if(username === "me@me")  {
-          console.log("I am here");
+        if(username === "me")  {
           valid = true;
-          console.log("In AJAX: " + valid);
+          store.set("username", "Guest");
+          store.set("userimage", "../image/guest.png");
+        } else if(data.exists === true) {
+          console.log("I AM HERE");
+          valid = true;
+          store.set("username", data.user.username);
+          store.set("userimage", data.user.imageUrl);
         }
       },
       type: 'POST',
       async: false
     });
-    console.log("OUTSIDE AJAX: " + valid);
     return valid;
   }
 }

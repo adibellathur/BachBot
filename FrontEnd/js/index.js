@@ -18,6 +18,7 @@ function start() {
   }
   loadContent();
   loadUser();
+  loadProfileContent();
   loadBrowseContent();
 }
 
@@ -106,7 +107,13 @@ function loadCreate() {
 function loadProfile() {
   console.log("profile clicked");
   sessionStorage.setItem("view", "Profile");
+  loadProfileContent();
   loadContent();
+}
+
+function loadProfileContent() {
+  document.getElementById("userimage-profile").src = store.get("userimage");
+  document.getElementById("username-profile").innerHTML = store.get("username");
 }
 
 function loadUser() {

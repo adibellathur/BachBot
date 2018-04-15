@@ -90,6 +90,10 @@ li {
   text-align: center;
 }
 
+#username-profile {
+  font-size: 3em;
+}
+
 .dashboard {
   padding: 1em;
 }
