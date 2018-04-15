@@ -60,29 +60,16 @@
           </div>
           <div class="row h-25">
           </div>
-          <div class="row h-25 justify-content-center">
+          <div class="row justify-content-center">
             <a href="#" onClick="MIDIjs.stop();">Stop MIDI Playback</a>
           </div>
         </nav>
         <!-- Main Content Goes Here -->
         <div class="col-sm-10 h-100" id="main-window">
-
-        <div class="topnav">
-          <div class="search-container">
-            <form action="/action_page.php">
-              <input type="text" placeholder="Search.." name="search">
-              <button type="submit"><i class="fa fa-search" style= "color: white;"></i></button>
-              <p></p>
-            </form>
-          </div>
-       </div>
-
             <!-- Stream Window -->
             <div class="content" id="Stream">
               <font size ="50" color= white>Stream</font>
               <!-- <form class="example" action="/action_page.php"> -->
-
-
               <div class="container">
                 <h2>Top Songs</h2>
                 <p></p>
@@ -151,10 +138,7 @@
                   </tbody>
                 </table>
               </div>
-
-
                <!-- <p class="ex1">
-
                 <button type="button" class="btn btn-primary bmd-btn-fab">
                   <i class="fa fa-star"> </i> -->
                <!-- </button> -->
@@ -180,16 +164,11 @@
                   <!--<img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
                   style="width:100px;height:100px;vertical-align: middle;"> -->
                 <!-- </p> -->
-
-
               <!-- <audio controls >
               <style>
                 audio { width: 430px; vertical-align: center;}
               </style>
               </audio> -->
-
-
-
             </div>
 
             <!-- Browse Window -->
@@ -199,8 +178,8 @@
                   <h1>Browse</h1>
                 </div>
                 <div class="col-sm-6">
-                  <form class="form-inline  waves-light" id="searchbar" mdbRippleRadius>
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                  <form class="form-inline  waves-light" id="searchbar" onsubmit="return validateSearch(1)" mdbRippleRadius>
+                    <input class="form-control mr-sm-2" id="searchbar-input-1" type="text" placeholder="Search">
                     <button class="btn btn-primary" id="button" type="submit">
                       <i class="fa fa-search"> </i>
                     </button>
@@ -212,7 +191,18 @@
                   <h2>Top Songs</h2>
                   <div class="card">
                     <div class="card-body">
-                      <p>You have no internet connection. Connect to the internet and try again</p>
+                      <div class="row">
+                        <div class="col -sm-6">
+                          <ul class="list-group" id="top-songs-1">
+                            <!-- users 1-5 go here -->
+                          </ul>
+                        </div>
+                        <div class="col-sm-6">
+                          <ul class="list-group" id="top-songs-2">
+                            <!-- users 6-10 go here -->
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -253,8 +243,8 @@
                   <h1>Search</h1>
                 </div>
                 <div class="col-sm-6">
-                  <form class="form-inline  waves-light" id="searchbar" mdbRippleRadius onsubmit="return validateSearch()">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" id="searchbar">
+                  <form class="form-inline  waves-light" id="searchbar" mdbRippleRadius onsubmit="return validateSearch(2)">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" id="searchbar-input-2">
                     <button class="btn btn-primary" id="button" type="submit">
                       <i class="fa fa-search"> </i>
                     </button>
@@ -262,10 +252,14 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-sm-12" id="you-searched-for">
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-sm-12">
                   <h2>Top Songs</h2>
                   <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" id="search-results">
                       <p>You have no internet connection. Connect to the internet and try again</p>
                     </div>
                   </div>
@@ -281,7 +275,17 @@
             <!-- Create Window -->
             <div class="content" id="Create">
               <div class="row">
-                <h1>Create</h1>
+                <div class="col-sm-6">
+                  <h1>Create</h1>
+                </div>
+                <div class="col-sm-6">
+                  <form class="form-inline  waves-light" id="searchbar" onsubmit="return validateSearch(3)" mdbRippleRadius>
+                    <input class="form-control mr-sm-2" id="searchbar-input-3" type="text" placeholder="Search">
+                    <button class="btn btn-primary" id="button" type="submit">
+                      <i class="fa fa-search"> </i>
+                    </button>
+                  </form>
+                </div>
               </div>
               <div class="row">
                 <div class="col-sm-12">
@@ -289,13 +293,16 @@
                     <form class="dashboard" id="dashboard-form" onsubmit="return validateDashboard()">
                       <h2>Dashboard</h2>
                       <div class="row" id="form">
-                        <div class="col-sm-4">
-                          <!-- Material input -->
+                        <div class="col-sm-4 justify-content-center">
+                          <h6 style="text-align: center;">Enter Key Signature</h6>
                           <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
                             <input type="text" class="form-control" id="key-signature" placeholder="Key" style="text-align: center">
                           </div>
+                          <br/>
+                          <p style="color: #ddd; text-align: center;">Note: add b for flat and # for sharp</p>
                         </div>
                         <div class="col-sm-4">
+                          <h6 style="text-align: center;">Enter Tempo</h6>
                           <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
                             <input type="text" class="form-control" id="tempo" placeholder="Tempo" style="text-align: center">
                           </div>
@@ -354,11 +361,11 @@
               <i><font size = "15" color= #ef807e> Vaz </font></i> -->
 
             <div class="row">
-              <div class="col-sm-2.7">
+              <div class="col-sm-3.5">
                 <img src="../image/CarolinaVaz-058.jpeg"
                   class="w3-circle" width="200" height="200" align= "left"/>
               </div>
-              <div class="col-sm-9.3">
+              <div class="col-sm-8.5">
                 <p style="text-align: left;">
                   <i><font size = "20" color= "white"> Carolina </font></i>
                   <i><font size = "20" color= #ef807e> Vaz </font></i>
@@ -416,27 +423,20 @@
     <script>
       window.jQuery = window.$ = require('jquery');
     </script>
-
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="../MDB/js/popper.min.js"></script>
-
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="../MDB/js/bootstrap.min.js"></script>
-
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="../MDB/js/mdbfull.min.js"></script>
-
     <!-- <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script> -->
     <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
-
     <!-- MidiJS -->
     <!-- <script type='text/javascript' src='https://www.midijs.net/lib/midi.js'></script> -->
-
     <!-- My Script -->
     <script src="../js/index.js"></script>
     <script src="../js/search.js"></script>
     <script src="../js/dashboard.js"></script>
     <script src="../js/playMusic.js"></script>
-
   </body>
 </html>
