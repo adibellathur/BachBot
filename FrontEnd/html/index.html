@@ -360,8 +360,8 @@
               </div>
             </div>
 
-            <!-- Profile Window -->
-            <div class="content" id="Profile">
+            <!-- Profile-old Window -->
+            <div class="content" id="Profile-old">
               <div class="row">
                 <div class="col-sm-6">
                   <h1>Profile</h1>
@@ -386,8 +386,8 @@
               </div>
             </div>
 
-            <!-- Profile-old Window -->
-            <div class="content" id="Profile-old">
+            <!-- Profile Window -->
+            <div class="content" id="Profile">
               <h1 class="display-3">
               </h1>
             <p style="text-align: left;">
@@ -408,28 +408,29 @@
                 <div class="col-sm-4">
                   <div class="card" style="width: 90%">
                     <div class="card-body">
-                      <h6> Followers: 30 </h6>
+                      <h6> Followers </h6>
+                      <h4> 30 </h4>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="card" style="width: 90%">
                     <div class="card-body">
-                      <h6> Following: 25 </h6>
+                      <h6> Following </h6>
+                      <h4> 25 </h4>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="card" style="width: 90%">
                     <div class="card-body">
-                      <h6> Liked Songs: 10</h6>
+                      <h6> Liked Songs </h6>
+                      <h4> 10 </h4>
                     </div>
                   </div>
                 </div>
               </div>
 
-                <div class="row">
-              </div>
             </div>
             </p>
 
@@ -441,6 +442,8 @@
                   <tr>
                     <th>Name</th>
                   </tr>
+                  <tr> </tr>
+                  <tr> </tr>
                 </thead>
                 <tbody>
                   <tr>
@@ -468,20 +471,49 @@
                     <td>Song Name 2</td>
                     <td> </td>
                     <td>
+                      <button type="button" id="button_play" class="btn btn-primary btn-lg" onclick='buttonPlayPress()'>
+                        Play <i class="fa fa-play"> </i>
+                      </button>
 
+                      <button type="button" id="button_stop" class="btn btn btn-primary btn-lg" onclick='buttonStopPress()'>
+                             Pause <i class="fa fa-stop"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <div style="position:relative;left:50px">
+                        <a href="#" class="btn btn-primary btn-lg">
+                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                          <span>Remove</span>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                   <tr>
                     <td>Song Name 3</td>
                     <td> </td>
                     <td>
+                      <button type="button" id="button_play" class="btn btn-primary btn-lg" onclick='buttonPlayPress()'>
+                        Play <i class="fa fa-play"> </i>
+                      </button>
 
+                      <button type="button" id="button_stop" class="btn btn btn-primary btn-lg" onclick='buttonStopPress()'>
+                             Pause <i class="fa fa-stop"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <div style="position:relative;left:50px">
+                        <a href="#" class="btn btn-primary btn-lg">
+                          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                          <span>Remove</span>
+                        </a>
+                      </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            </div>
+
+          </div>
         </div>
       </div>
     </div>
