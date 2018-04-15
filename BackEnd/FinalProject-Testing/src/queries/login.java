@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
+import model.*;
+
 @WebServlet("/login")
 public class login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,6 +25,9 @@ public class login extends HttpServlet {
 		ResultSet rs = null;
 		
 		String password = null;
+		String username = null;
+		String imageUrl = null;
+		
 		boolean success = false;
 		
 		try {
@@ -28,19 +35,28 @@ public class login extends HttpServlet {
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			st = conn.createStatement();
 			String inputUsername = request.getParameter("username");
-			rs = st.executeQuery("SELECT users.username, users.password\r\n" + 
+			rs = st.executeQuery("SELECT *\r\n" + 
 					"	FROM users\r\n" + 
 					"	WHERE users.username LIKE '" + inputUsername + "'");
 			while(rs.next()) {
 				password = rs.getString("password");
+				if(password != null && password.equals(request.getParameter("password"))) {
+					success = true;
+					username = rs.getString("username");
+					imageUrl = rs.getString("image_url");
+				}
 			}
 			
-			if(password != null && password.equals(request.getParameter("password"))) {
-				success = true;
-			}
+			UserBool returnUser = new UserBool(success, new User(username, imageUrl));
+			
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
-	        response.getWriter().write(Boolean.toString(success));
+	        
+	        String json = new Gson().toJson(returnUser);
+
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        response.getWriter().write(json);
 	        
 		} catch (SQLException sqle) {
 			System.out.println("sqle: " + sqle.getMessage());

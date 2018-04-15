@@ -1,0 +1,2 @@
+1. Sign Up
+2. Get All info of user. this is for user profile page. Songs, followers, following, number of songs.

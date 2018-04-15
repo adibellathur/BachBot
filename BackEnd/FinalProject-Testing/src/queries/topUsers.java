@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import model.Song;
+import model.*;
 
 @WebServlet("/topUsers")
 public class topUsers extends HttpServlet {
@@ -25,28 +25,26 @@ public class topUsers extends HttpServlet {
 		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
-		ArrayList<Song> songs = new ArrayList<Song>();
+		ArrayList<User> users = new ArrayList<User>();
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			st = conn.createStatement();
-			rs = st.executeQuery("SELECT songs.*, users.username, COUNT(favorites.song_id) AS favorites\r\n" + 
-					"	FROM songs\r\n" + 
-					"	JOIN users\r\n" + 
-					"		ON songs.user_id=users.id\r\n" + 
-					"	WHERE songs.title LIKE '%" + request.getParameter("search") + "%'\r\n" + 
-					"	ORDER BY songs.title;");
+			rs = st.executeQuery("SELECT users.*, COUNT(followers.user_id) AS num_followers\r\n" + 
+					"	FROM users\r\n" + 
+					"	LEFT JOIN followers\r\n" + 
+					"		ON followers.user_id=users.id\r\n" + 
+					"	GROUP BY users.id\r\n" + 
+					"	ORDER BY num_followers;");
 			while(rs.next()) {
-				String title = rs.getString("title");
-				String path = rs.getString("path");
 				String username = rs.getString("username");
-				int favorites = rs.getInt("favorites");
-				System.out.println(title + "\t" + path + "\t" + username + "\t" + favorites);
-				songs.add(new Song(title, path, username, favorites));
+				String imageUrl = rs.getString("imageUrl");
+				//int num_followers = rs.getInt("num_followers");
+				users.add(new User(username, imageUrl));
 			}
 			
-			String json = new Gson().toJson(songs);
+			String json = new Gson().toJson(users);
 
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
