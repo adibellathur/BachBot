@@ -17,6 +17,10 @@ function validateForm() {
   console.log("username: " + username + ", password: " + password);
   if(username == "" || password == "") {
     return false;
+  } else if(username === 'me') {
+    valid = true;
+    store.set("username", "Guest");
+    store.set("userimage", "../image/guest.png");
   } else {
     $.ajax({
       url: 'http://localhost:8080/CSCI201-FinalProject/login',
@@ -33,11 +37,7 @@ function validateForm() {
       success: function(data) {
         console.log("SUCCESS");
         console.log(data);
-        if(username === "me")  {
-          valid = true;
-          store.set("username", "Guest");
-          store.set("userimage", "../image/guest.png");
-        } else if(data.exists === true) {
+        if(data.exists === true) {
           console.log("I AM HERE");
           valid = true;
           store.set("username", data.user.username);
