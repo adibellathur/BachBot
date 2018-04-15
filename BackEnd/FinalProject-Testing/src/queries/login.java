@@ -40,12 +40,11 @@ public class login extends HttpServlet {
 					"	WHERE users.username LIKE '" + inputUsername + "'");
 			while(rs.next()) {
 				password = rs.getString("password");
-				username = rs.getString("username");
-				imageUrl = rs.getString("imageUrl");
-			}
-			
-			if(password != null && password.equals(request.getParameter("password"))) {
-				success = true;
+				if(password != null && password.equals(request.getParameter("password"))) {
+					success = true;
+					username = rs.getString("username");
+					imageUrl = rs.getString("image_url");
+				}
 			}
 			
 			UserBool returnUser = new UserBool(success, new User(username, imageUrl));
