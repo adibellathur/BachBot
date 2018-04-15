@@ -8,10 +8,10 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Bootstrap core CSS -->
     <link href="../MDB/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design for Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"> -->
+
     <!-- Material Design Bootstrap -->
     <link href="../MDB/css/mdbfull.min.css" rel="stylesheet">
 
@@ -26,14 +26,12 @@
 
     <!-- Bootstrap CSS -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-    <!-- Bootstrap Material CSS -->
-    <!-- <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous"> -->
 
     <!-- Profile Stuff-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <!-- MidiJS -->
+    <script type='text/javascript' src='http://www.midijs.net/lib/midi.js'></script>
     <title>BachBot</title>
   </head>
   <body>
@@ -42,10 +40,15 @@
 
         <!-- NavBar -->
         <nav class="col-sm-2 navbar-fixed-left" id="navbar">
-          <div class="row h-25">
-            <img id="userimage" style="height:80%; width:80%;"></img>
-            <div id="username"></div>
+          <div class="row h-25 justify-content-center">
+            <div class="col-sm-12" id="userspace">
+              <img class="img-circle" id="userimage" style="height:8em; width:8em;"></img>
+              <div>
+                <h4 id="username"></h4>
+              </div>
+            </div>
           </div>
+          <hr>
           <div class="row h-25 justify-content-center">
             <div class="col-sm-12 w-100">
               <ul class="nav nav-pills flex-column">
@@ -55,106 +58,216 @@
             </ul>
             </div>
           </div>
+          <div class="row h-25">
+          </div>
+          <div class="row justify-content-center">
+            <a href="#" onClick="MIDIjs.stop();">Stop MIDI Playback</a>
+          </div>
         </nav>
         <!-- Main Content Goes Here -->
         <div class="col-sm-10 h-100" id="main-window">
-
             <!-- Stream Window -->
-            <div class="content" id="Browse">
-
-
+            <div class="content" id="Stream">
               <font size ="50" color= white>Stream</font>
               <!-- <form class="example" action="/action_page.php"> -->
-              <input type="text" placeholder="Search.." name="search" >
-              <button type="submit"><i class="fa fa-search"></i></button>
-              </form>
+              <div class="container">
+                <h2>Top Songs</h2>
+                <p></p>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Song</th>
+                      <th>Composer</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>BachSong 1</td>
+                      <td>@jane</td>
+                      <td>
+                        <audio controls="controls">
+                        </audio>
+                      </td>
+                      <td>
+                        <span class="btn-group-sm">
+                          <button type="button" class="btn btn-primary bmd-btn-fab">
+                            <i class="fa fa-star"> </i>
+                          </button>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>BachSong 2</td>
+                      <td>@moe</td>
+                      <td>
+                        <audio controls="controls">
+                        </audio>
+                      </td>
+                      <td>
+                        <span class="btn-group-sm">
+                          <button type="button" class="btn btn-primary bmd-btn-fab">
+                            <i class="fa fa-star"> </i>
+                          </button>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>BachSong 3</td>
+                      <td>@sooley</td>
+                      <td>
+                      <div class="onoffswitch3">
+                          <input type="checkbox" name="onoffswitch3" class="onoffswitch3-checkbox" id="myonoffswitch3" checked>
+                          <label class="onoffswitch3-label" for="myonoffswitch3">
+                              <span class="onoffswitch3-inner">
+                                  <span class="onoffswitch3-active"><span class="onoffswitch3-switch">Play</span></span>
+                                  <span class="onoffswitch3-inactive"><span class="onoffswitch3-switch">Pause</span></span>
+                              </span>
+                          </label>
+                      </div>
+                      </td>
+                      <td>
+                        <span class="btn-group-sm">
+                          <button type="button" class="btn btn-primary bmd-btn-fab">
+                            <i class="fa fa-star"> </i>
+                          </button>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+               <!-- <p class="ex1">
+                <button type="button" class="btn btn-primary bmd-btn-fab">
+                  <i class="fa fa-star"> </i> -->
+               <!-- </button> -->
+                  <!-- <a class="btn-floating btn-lg purple-gradient"><i class="fa fa-bolt"></i></a> -->
 
-              <p></p>
-              <i><h3>Top Songs</h3></i>
-              <p></p>
+                  <!-- <img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
+                  style="width:100px;height:100px;vertical-align: middle;"> -->
+                <!-- </p> -->
 
+
+                <!-- <audio controls > -->
+                <!-- <style>
+                  audio { width: 430px; vertical-align: middle;}
+                </style>
+                </audio>
+                <p></p> -->
+                <!-- <a href="#" class="btn btn-primary" style="float: left;">Like </a> -->
+
+                <!-- <p class="ex1">
+                  <button type="button" class="btn btn-primary bmd-btn-fab">
+                    <i class="fa fa-star"> </i>
+                  </button> -->
+                  <!--<img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
+                  style="width:100px;height:100px;vertical-align: middle;"> -->
+                <!-- </p> -->
+              <!-- <audio controls >
+              <style>
+                audio { width: 430px; vertical-align: center;}
+              </style>
+              </audio> -->
+            </div>
+
+            <!-- Browse Window -->
+            <div class="content" id="Browse">
+              <div class="row h-100">
+                <div class="col-sm-6">
+                  <h1>Browse</h1>
+                </div>
+                <div class="col-sm-6">
+                  <form class="form-inline  waves-light" id="searchbar" onsubmit="return validateSearch(1)" mdbRippleRadius>
+                    <input class="form-control mr-sm-2" id="searchbar-input-1" type="text" placeholder="Search">
+                    <button class="btn btn-primary" id="button" type="submit">
+                      <i class="fa fa-search"> </i>
+                    </button>
+                  </form>
+                </div>
+              </div>
               <div class="row">
-                <div class="col-sm-6">
-                  <div class="card bg-light" id="row1" >
-                    <h5 class="card-header" style="color:#22242f; font-size:200%;height: 10%"> <b> Musica </h5></b>
-                      <div class="card-body" style= "color: #484a5d;">
-                        <p></p>
-
-                        <div class="row" id="music">
-                          <div class="col-sm-3.5">
-                            <div class="w3-container">
-                              <style>
-                                p.ex1 {
-                                  margin-left: 10%;
-                                }
-                              </style>
-                              <p class="ex1">
-
-                              <button type="button" class="btn btn-primary bmd-btn-fab">
-                                <i class="fa fa-star"> </i>
-                              </button>
-                                <!-- <a class="btn-floating btn-lg purple-gradient"><i class="fa fa-bolt"></i></a> -->
-
-                                <!-- <img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
-                                style="width:100px;height:100px;vertical-align: middle;"> -->
-                              </p>
-                            </div>
-                          </div>
-                          <div class="col-sm-8.5">
-                            <audio controls >
-                            <style>
-                              audio { width: 430px; vertical-align: middle;}
-                            </style>
-                            </audio>
-                            <p></p>
-                            <!-- <a href="#" class="btn btn-primary" style="float: left;">Like </a> -->
-                            <p>
-
-                            </p>
-                          </div>
+                <div class="col-sm-12">
+                  <h2>Top Songs</h2>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col -sm-6">
+                          <ul class="list-group" id="top-songs-1">
+                            <!-- users 1-5 go here -->
+                          </ul>
+                        </div>
+                        <div class="col-sm-6">
+                          <ul class="list-group" id="top-songs-2">
+                            <!-- users 6-10 go here -->
+                          </ul>
                         </div>
                       </div>
+                    </div>
                   </div>
                 </div>
-
-                <div class="col-sm-6">
-                  <div class="card " id="row2">
-                    <h5 class="card-header" style="color:#22242f; font-size:200%; height: 50%"> <b>Song Title </h5></b>
-                      <div class="card-body ">
-                        <p></p>
-
-                        <div class="row" id="music">
-                          <div class="col-sm-3.5">
-                            <div class="w3-container">
-
-                              <style>
-                                p.ex1 {
-                                  margin-left: 10%;
-                                }
-                              </style>
-                              <p class="ex1">
-                                <button type="button" class="btn btn-primary bmd-btn-fab">
-                                  <i class="fa fa-star"> </i>
-                                </button>
-                                <!--<img src="http://www.okayplayer.com/wp-content/uploads/2015/03/kendrick-lamar-to-pimp.jpg"
-                                style="width:100px;height:100px;vertical-align: middle;"> -->
-                              </p>
-                            </div>
-                          </div>
-                          <div class="col-sm-8.5">
-                            <audio controls >
-                            <style>
-                              audio { width: 430px; vertical-align: center;}
-                            </style>
-                            </audio>
-                            <p></p>
-                            <!-- <a href="#" class="btn btn-primary" style="float: left;">Like </a> -->
-                            <p></p>
-                          </div>
+              </div>
+              <br/>
+              <hr>
+              <div class="row">
+                <div class="col-sm-12">
+                  <h2>Top Artists</h2>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col -sm-6">
+                          <ul class="list-group" id="top-users-1">
+                            <!-- users 1-5 go here -->
+                          </ul>
+                        </div>
+                        <div class="col-sm-6">
+                          <ul class="list-group" id="top-users-2">
+                            <!-- users 6-10 go here -->
+                          </ul>
                         </div>
                       </div>
+                    </div>
                   </div>
                 </div>
+              </div>
+              <div class="row">
+                <br>
+                <br>
+              </div>
+            </div>
+
+            <!-- Search Window -->
+            <div class="content" id="Search">
+              <div class="row h-100">
+                <div class="col-sm-6">
+                  <h1>Search</h1>
+                </div>
+                <div class="col-sm-6">
+                  <form class="form-inline  waves-light" id="searchbar" mdbRippleRadius onsubmit="return validateSearch(2)">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" id="searchbar-input-2">
+                    <button class="btn btn-primary" id="button" type="submit">
+                      <i class="fa fa-search"> </i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12" id="you-searched-for">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <h2>Top Songs</h2>
+                  <div class="card">
+                    <div class="card-body" id="search-results">
+                      <p>You have no internet connection. Connect to the internet and try again</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <br>
+                <br>
               </div>
             </div>
 
@@ -162,53 +275,80 @@
             <!-- Create Window -->
             <div class="content" id="Create">
               <div class="row">
-                <h1>Create</h1>
-              </div>
-              <!-- <div class="card" style="background-color: #2b2e38">
-                <div class="card-body justify-content-around"> -->
-                <div id="dashboard">
-                  <form class="dashboard" id="dashboard-form">
-                    <h2>Dashboard</h2>
-                    <div class="row" id="form">
-                      <div class="col-sm-4">
-                        <!-- Material input -->
-                        <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
-                          <input type="text" class="form-control" placeholder="Key" style="text-align: center">
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        2
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="switch">
-                          <label>
-                            <input type="checkbox" checked="checked">
-                            <span class="lever"></span>
-                            <p>Option One</p>
-                          </label>
-                          <br/>
-                          <label>
-                            <input type="checkbox" checked="checked">
-                            <span class="lever"></span>
-                            <p>Option Two</p>
-                          </label>
-                          <br/>
-                          <label>
-                            <input id="switch" type="checkbox" checked="checked">
-                            <span id="switch" class="lever"></span>
-                            <p>Option Three</p>
-                          </label>
-                          <br/>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row justify-content-center">
-                      <button class="btn btn-primary" id="button" type="submit">Submit</button>
-                    </div>
+                <div class="col-sm-6">
+                  <h1>Create</h1>
+                </div>
+                <div class="col-sm-6">
+                  <form class="form-inline  waves-light" id="searchbar" onsubmit="return validateSearch(3)" mdbRippleRadius>
+                    <input class="form-control mr-sm-2" id="searchbar-input-3" type="text" placeholder="Search">
+                    <button class="btn btn-primary" id="button" type="submit">
+                      <i class="fa fa-search"> </i>
+                    </button>
                   </form>
                 </div>
-                <!-- </div>
-              </div> -->
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div id="dashboard">
+                    <form class="dashboard" id="dashboard-form" onsubmit="return validateDashboard()">
+                      <h2>Dashboard</h2>
+                      <div class="row" id="form">
+                        <div class="col-sm-4 justify-content-center">
+                          <h6 style="text-align: center;">Enter Key Signature</h6>
+                          <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
+                            <input type="text" class="form-control" id="key-signature" placeholder="Key" style="text-align: center">
+                          </div>
+                          <br/>
+                          <p style="color: #ddd; text-align: center;">Note: add b for flat and # for sharp</p>
+                        </div>
+                        <div class="col-sm-4">
+                          <h6 style="text-align: center;">Enter Tempo</h6>
+                          <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
+                            <input type="text" class="form-control" id="tempo" placeholder="Tempo" style="text-align: center">
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="switch">
+                            <label>
+                              <input type="checkbox" checked="checked" id="option1">
+                              <span class="lever"></span>
+                              <p>Option One</p>
+                            </label>
+                            <br/>
+                            <label>
+                              <input type="checkbox" checked="checked" id="option2">
+                              <span class="lever"></span>
+                              <p>Option Two</p>
+                            </label>
+                            <br/>
+                            <label>
+                              <input type="checkbox" checked="checked" id="option3">
+                              <span class="lever"></span>
+                              <p>Option Three</p>
+                            </label>
+                            <br/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <button class="btn btn-primary" id="button" type="submit">Submit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div id="results" class="card">
+                    <div class="card-body">
+                      <h1>Results</h1>
+                      <p>You have no generated music yet.</p>
+                      <div id="dashboard-results">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Profile Window -->
@@ -221,11 +361,11 @@
               <i><font size = "15" color= #ef807e> Vaz </font></i> -->
 
             <div class="row">
-              <div class="col-sm-2.7">
+              <div class="col-sm-3.5">
                 <img src="../image/CarolinaVaz-058.jpeg"
                   class="w3-circle" width="200" height="200" align= "left"/>
               </div>
-              <div class="col-sm-9.3">
+              <div class="col-sm-8.5">
                 <p style="text-align: left;">
                   <i><font size = "20" color= "white"> Carolina </font></i>
                   <i><font size = "20" color= #ef807e> Vaz </font></i>
@@ -233,6 +373,32 @@
                 </p>
                 <p style="text-align: left;">
                 </p>
+
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="card" style="width: 90%">
+                    <div class="card-body">
+                      <h6> Followers: 30 </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="card" style="width: 90%">
+                    <div class="card-body">
+                      <h6> Following: 25 </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="card" style="width: 90%">
+                    <div class="card-body">
+                      <h6> Liked Songs: 10</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                <div class="row">
               </div>
             </div>
             </p>
@@ -266,11 +432,7 @@
               </tbody>
               </table>
             </div>
-
-
-
             </div>
-
         </div>
       </div>
     </div>
@@ -292,9 +454,12 @@
     <script type="text/javascript" src="../MDB/js/mdbfull.min.js"></script>
     <!-- <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script> -->
     <script>$(document).ready(function() { $('body').bootstrapMaterialDesign(); });</script>
+    <!-- MidiJS -->
+    <!-- <script type='text/javascript' src='https://www.midijs.net/lib/midi.js'></script> -->
     <!-- My Script -->
     <script src="../js/index.js"></script>
+    <script src="../js/search.js"></script>
     <script src="../js/dashboard.js"></script>
-
+    <script src="../js/playMusic.js"></script>
   </body>
 </html>

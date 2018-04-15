@@ -12,6 +12,12 @@ h1 {
 
 h2 {
   font-style: italic;
+  margin: 0.5em;
+}
+
+h4 {
+  font-style: italic;
+  color: #2bbbad;
 }
 
 p {
@@ -30,6 +36,18 @@ a:hover {
 form {
   margin: 0;
   padding: 0;
+}
+
+hr {
+  border-color: grey;
+}
+
+img {
+  margin: 1em;
+}
+
+li {
+  text-align: center;
 }
 
 #navbar {
@@ -63,6 +81,15 @@ form {
   color: white;
 }
 
+#searchbar {
+  float: right;
+  margin-right: 2em;
+}
+
+#userspace {
+  text-align: center;
+}
+
 .dashboard {
   padding: 1em;
 }
@@ -73,8 +100,14 @@ form {
 }
 
 .card-body {
-  padding: 0;
   text-align: center;
+}
+
+.card {
+  background-color: #707284;
+  display: block;
+  margin-left: 2em;
+  margin-right: 2em;
 }
 
 .switch {
@@ -90,6 +123,10 @@ form {
   background-color: red;
 }
 
-.row2{
-  background-color: #484a5d;
+.form-control {
+  color: #EEEEEE;
+}
+
+.form-control:focus {
+  color: white;
 }
