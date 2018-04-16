@@ -13,14 +13,14 @@ let mainWindow;
 app.on('ready', function() {
 	//Create HTML file
 	mainWindow = new BrowserWindow({
-		width: 1100,
-		height: 700,
+		width: 1200,
+		height: 800,
 		backgroundColor: '#000000',
 		show: false
 	}); //titleBarStyle: 'hidden'
 	//Load HTML
 	mainWindow.loadURL(url.format({
-		pathname: path.join(__dirname, 'html/homepage.html'),
+		pathname: path.join(__dirname, 'html/login.html'),
 		protocol: 'file:',
 		slashes: true
 	}));

@@ -61,7 +61,7 @@ function loadBrowseContent() {
       document.getElementById("top-users-2").innerHTML  = "";
       for(var i=0 ; i<10 ; i++) {
         var user = data[i];
-        console.log(user.name);
+        //console.log(user.name);
         if(i / 5 < 1) {
           document.getElementById("top-users-1").innerHTML += "<li class=\"list-group-item\"><p>" + (i+1) + ". " + user.name + "</p></li>";
         } else {
@@ -86,7 +86,7 @@ function loadBrowseContent() {
       document.getElementById("top-songs-2").innerHTML  = "";
       for(var i=0 ; i<4 ; i++) {
         var user = data[i];
-        console.log(user.name);
+        //console.log(user.name);
         if(i / 2 < 1) {
           document.getElementById("top-songs-1").innerHTML += "<li class=\"list-group-item\"><h4>" + (i+1) + ". " + user.name + "</h4></li>";
         } else {
