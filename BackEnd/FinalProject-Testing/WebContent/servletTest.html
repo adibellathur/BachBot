@@ -9,7 +9,7 @@
 	<script>
 		window.onload = function(){
 			var xhttp = new XMLHttpRequest();
-			xhttp.open("POST", "generateSongs?username=Ben&title=kickass&key=C&tempo=100&instrument1=&instrument2=&instrument3=&instrument4&chordProgression=1t4t5t1", false);
+			xhttp.open("POST", "generateSongs?username=Ben&title=kickass&key=C&tempo=100&instrument1=&instrument2=&instrument3=&instrument4&chordProgression=1%204%205%201", false);
 			xhttp.send();
 			var response = xhttp.responseText;
 			document.querySelector("#test").innerHTML = response;

@@ -37,7 +37,7 @@ public class generateSongs extends HttpServlet {
 		
 		String temp = request.getParameter("chordProgression");
 		//parse temp into arraylist of integeres
-		String[] parts = temp.split("t");
+		String[] parts = temp.split(" ");
 		ArrayList<Integer> chords = new ArrayList<Integer>();
 		for(int n = 0; n < parts.length; n++) {
 		   chords.add(Integer.parseInt(parts[n]));
@@ -46,7 +46,7 @@ public class generateSongs extends HttpServlet {
 		ExecutorService executors = Executors.newCachedThreadPool();
 		
 		for(int i = 0 ; i < 6; i++) {
-			String tempFilePath = getServletContext().getRealPath("/songs") + "/" + fileName + i;
+			String tempFilePath = getServletContext().getRealPath("") + "/" + fileName + i;
 			String tempFileName = fileName + i;
 			executors.execute(new SongGeneratorThread(key, tempo, soprano, alto, tenor, bass, chords, tempFilePath));
 			songs.add(new Song(title, tempFileName, username, 0));
