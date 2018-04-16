@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	
+		<script type='text/javascript' src='http://www.midijs.net/lib/midi.js'></script>
 	</head>
 	<body>
 		<div id="test" ></div>
+		<a href="#" onClick="playMidi()">Play Midi</a>
 	</body>
 	<script>
 		window.onload = function(){
 			var xhttp = new XMLHttpRequest();
-			xhttp.open("POST", "generateSongs?username=Ben&title=kickass&key=C&tempo=100&instrument1=&instrument2=&instrument3=&instrument4&chordProgression=1%204%205%201", false);
+			xhttp.open("GET", "signup?username=Kathy&password=Kathy&imageUrl=somethin", false);
 			xhttp.send();
 			var response = xhttp.responseText;
 			document.querySelector("#test").innerHTML = response;
+		}
+		function playMidi(){
+			MIDIjs.play('http://localhost:8080/FinalProject-Testing/Ben_kickass0.midi');
 		}
 	</script>
 </html>

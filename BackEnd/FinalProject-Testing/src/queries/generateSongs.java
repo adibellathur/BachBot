@@ -29,6 +29,7 @@ public class generateSongs extends HttpServlet {
 		String fileName = username + "_" + title;
 		
 		String key = request.getParameter("key");
+		System.out.println(key);
 		String tempo = request.getParameter("tempo");
 		String soprano = request.getParameter("instrument1");
 		String alto = request.getParameter("instrument2");
@@ -36,6 +37,7 @@ public class generateSongs extends HttpServlet {
 		String bass = request.getParameter("instrument4");
 		
 		String temp = request.getParameter("chordProgression");
+		System.out.println(temp);
 		//parse temp into arraylist of integeres
 		String[] parts = temp.split(" ");
 		ArrayList<Integer> chords = new ArrayList<Integer>();
