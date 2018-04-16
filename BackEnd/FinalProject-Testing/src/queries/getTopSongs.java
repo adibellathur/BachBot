@@ -15,36 +15,40 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import model.*;
+import model.Song;
 
-@WebServlet("/topUsers")
-public class topUsers extends HttpServlet {
+@WebServlet("/getTopSongs")
+public class getTopSongs extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
-		ArrayList<User> users = new ArrayList<User>();
+		ArrayList<Song> songs = new ArrayList<Song>();
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			st = conn.createStatement();
-			rs = st.executeQuery("SELECT users.*, COUNT(followers.user_id) AS num_followers\r\n" + 
-					"	FROM users\r\n" + 
-					"	LEFT JOIN followers\r\n" + 
-					"		ON followers.user_id=users.id\r\n" + 
-					"	GROUP BY users.id\r\n" + 
-					"	ORDER BY num_followers;");
+			rs = st.executeQuery("SELECT songs.title, users.username, songs.path, COUNT(favorites.song_id) AS favorites\r\n" + 
+					"	FROM songs\r\n" + 
+					"	JOIN users\r\n" + 
+					"		ON users.id=songs.user_id\r\n" + 
+					"	LEFT JOIN favorites\r\n" + 
+					"		ON favorites.song_id=songs.id\r\n" + 
+					"	GROUP BY songs.id\r\n" +
+					"	ORDER BY favorites DESC;");
 			while(rs.next()) {
+				String title = rs.getString("title");
+				String path = rs.getString("path");
 				String username = rs.getString("username");
-				String imageUrl = rs.getString("imageUrl");
-				//int num_followers = rs.getInt("num_followers");
-				users.add(new User(username, imageUrl));
+				int favorites = rs.getInt("favorites");
+				System.out.println(title + "\t" + path + "\t" + username + "\t" + favorites);
+				songs.add(new Song(title, path, username, favorites));
 			}
 			
-			String json = new Gson().toJson(users);
+			String json = new Gson().toJson(songs);
 
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");

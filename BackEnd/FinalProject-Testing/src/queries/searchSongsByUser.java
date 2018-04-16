@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,46 +15,40 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import model.*;
+import model.Song;
 
-@WebServlet("/login")
-public class login extends HttpServlet {
+@WebServlet("/searchSongsByUser")
+public class searchSongsByUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
-		
-		String password = null;
-		String username = null;
-		String imageUrl = null;
-		
-		boolean success = false;
+		ArrayList<Song> songs = new ArrayList<Song>();
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			st = conn.createStatement();
-			String inputUsername = request.getParameter("username");
-			rs = st.executeQuery("SELECT *\r\n" + 
-					"	FROM users\r\n" + 
-					"	WHERE users.username LIKE '" + inputUsername + "'");
+			rs = st.executeQuery("SELECT songs.*, COUNT(favorites.id) AS num_favorites\r\n" + 
+					"	FROM songs\r\n" + 
+					"	JOIN users \r\n" + 
+					"		ON songs.user_id=users.id\r\n" + 
+					"	LEFT JOIN favorites\r\n" + 
+					"		ON favorites.song_id=songs.id\r\n" + 
+					"	WHERE users.username LIKE '%" + request.getParameter("search") + "%'\r\n" + 
+					"    GROUP BY songs.title;");
 			while(rs.next()) {
-				password = rs.getString("password");
-				if(password != null && password.equals(request.getParameter("password"))) {
-					success = true;
-					username = rs.getString("username");
-					imageUrl = rs.getString("image_url");
-				}
+				String title = rs.getString("title");
+				String path = rs.getString("path");
+				String username = rs.getString("username");
+				int favorites = rs.getInt("favorites");
+				System.out.println(title + "\t" + path + "\t" + username + "\t" + favorites);
+				songs.add(new Song(title, path, username, favorites));
 			}
 			
-			UserBool returnUser = new UserBool(success, new User(username, imageUrl, 0));
-			
-	        response.setContentType("application/json");
-	        response.setCharacterEncoding("UTF-8");
-	        
-	        String json = new Gson().toJson(returnUser);
+			String json = new Gson().toJson(songs);
 
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");

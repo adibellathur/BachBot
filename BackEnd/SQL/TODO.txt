@@ -1,2 +1,5 @@
 1. Sign Up
-2. Get All info of user. this is for user profile page. Songs, followers, following, number of songs.
+DONE 2. Get All info of user. this is for user profile page. Songs, followers, following, number of songs.
+DONE 3. get songs of user. composer, title, url to play
+4. add followers
+5. add favorite

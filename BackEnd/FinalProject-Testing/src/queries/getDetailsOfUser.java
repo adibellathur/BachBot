@@ -1,4 +1,5 @@
 package queries;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,39 +16,54 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import model.Song;
+import model.*;
 
-@WebServlet("/allSongs")
-public class allSongs extends HttpServlet {
+@WebServlet("/getDetailsOfUser")
+public class getDetailsOfUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+       
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
-		ArrayList<Song> songs = new ArrayList<Song>();
+		int numFollowing = 0;
+		int numFollowers = 0;
+		int numSongs = 0;
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			st = conn.createStatement();
-			rs = st.executeQuery("SELECT songs.title, users.username, songs.path, COUNT(favorites.song_id) AS favorites\r\n" + 
-					"	FROM songs\r\n" + 
-					"	JOIN users\r\n" + 
-					"		ON users.id=songs.user_id\r\n" + 
-					"	LEFT JOIN favorites\r\n" + 
-					"		ON favorites.song_id=songs.id\r\n" + 
-					"	GROUP BY songs.title;");
+			rs = st.executeQuery("SELECT users.username, COUNT(*) AS num_following\r\n" + 
+					"	FROM following\r\n" + 
+					"	LEFT JOIN users\r\n" + 
+					"		ON users.id=following.user_id\r\n" + 
+					"	WHERE users.username LIKE '" + request.getParameter("username") + "';");
 			while(rs.next()) {
-				String title = rs.getString("title");
-				String path = rs.getString("path");
-				String username = rs.getString("username");
-				int favorites = rs.getInt("favorites");
-				System.out.println(title + "\t" + path + "\t" + username + "\t" + favorites);
-				songs.add(new Song(title, path, username, favorites));
+				numFollowing = rs.getInt("num_following");
+			}
+			rs.close();
+			
+			rs = st.executeQuery("SELECT users.username, COUNT(*) AS num_followers\r\n" + 
+					"	FROM followers\r\n" + 
+					"	LEFT JOIN users\r\n" + 
+					"		ON users.id=followers.user_id\r\n" + 
+					"	WHERE users.username LIKE '" + request.getParameter("username") + "';");
+			while(rs.next()) {
+				numFollowers = rs.getInt("num_followers");
+			}
+			rs.close();
+			
+			rs = st.executeQuery("SELECT users.username, COUNT(*) AS num_songs\r\n" + 
+					"	FROM songs\r\n" + 
+					"	LEFT JOIN users\r\n" + 
+					"		ON users.id=songs.user_id\r\n" + 
+					"	WHERE users.username LIKE '" + request.getParameter("username") + "';");
+			while(rs.next()) {
+				numSongs = rs.getInt("num_songs");
 			}
 			
-			String json = new Gson().toJson(songs);
+			String json = new Gson().toJson(new ProfileDetails(numFollowers, numFollowing, numSongs));
 
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
