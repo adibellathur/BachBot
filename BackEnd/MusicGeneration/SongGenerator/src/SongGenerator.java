@@ -1,12 +1,14 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.jfugue.midi.MidiFileManager;
 import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
 import org.jfugue.theory.Chord;
 import org.jfugue.theory.ChordProgression;
+import org.jfugue.theory.Intervals;
 import org.jfugue.theory.Note;
 
 public class SongGenerator {
@@ -17,13 +19,13 @@ public class SongGenerator {
 	private String instrumentAlto;
 	private String instrumentTenor;
 	private String instrumentBass;
-	private ArrayList<String> validChords;
-	private ArrayList<Integer> givenChordProg;
-	private String melody; //null if none given
+	private ArrayList<Integer> givenChordProg; //JUST 4 CHORDS
 	private String filename;
 	
 	//OTHER
-	private ArrayList<ArrayList<Note> > existingNotes;
+	private ArrayList<String> comboCollection = new ArrayList<String>();
+	private ArrayList<ArrayList<Integer> > comboCollectionNums = new ArrayList<ArrayList<Integer> >();
+	private HashMap<String, Integer> noteToQuantity = new HashMap<String, Integer>();
 	
 	public SongGenerator()  { //default configurations
 		ArrayList<Integer> test = generateChordProgression();
@@ -32,19 +34,22 @@ public class SongGenerator {
 	}
 	
 	public SongGenerator(String key, String tempo, String instrumentSoprano, String instrumentAlto,
-						String instrumentTenor, String instrumentBass, ArrayList<String> validChords,
-						ArrayList<Integer> givenChordProg, String melody, String filename) {
+						String instrumentTenor, String instrumentBass,
+						ArrayList<Integer> givenChordProg, String filename) {
 		this.key = key;
 		this.tempo = tempo;
 		this.instrumentSoprano = instrumentSoprano;
 		this.instrumentAlto = instrumentAlto;
 		this.instrumentTenor = instrumentTenor;
 		this.instrumentBass = instrumentBass;
-		this.validChords = new ArrayList<String>(validChords);
 		this.givenChordProg = new ArrayList<Integer>(givenChordProg);
-		this.melody = melody;
 		this.filename = filename;
-		this.existingNotes = new ArrayList<ArrayList<Note> >();
+		ChordProgression scale = new ChordProgression("I II III IV V VI VII");
+		scale.setKey(key);
+		Chord[] scaleChords = scale.getChords();
+		for (int i = 1; i <= scaleChords.length; i++) {
+			noteToQuantity.put(scaleChords[i-1].getRoot().toString(), i);
+		}
 		
 		ArrayList<Integer> chordNums = generateChordProgression();
 		String cpstring = null;
@@ -53,55 +58,44 @@ public class SongGenerator {
 		} else {
 			cpstring = toCPString(chordNums, true);
 		}
-		//PRINT
+		//PRINT CHORD PROGRESSION
 		for (int j = 0; j < chordNums.size(); j++) System.out.print(chordNums.get(j) + " ");
 		System.out.println();
 		
+		Player player = new Player(); 
+		Pattern p = new Pattern();
 		ChordProgression cp = new ChordProgression(cpstring);
 		cp.setKey(key);
-		Player player = new Player();
-		player.play(cp);
+		//notesInKey = getNotesInKey(key);
+		Chord[] chords = cp.getChords();
+		String lastIntervals = null;
+		for (int i = 0; i < chords.length; i++) {
+			String next = findBestIntervals(lastIntervals, chords[i]);
+			Chord chord = new Chord(new Note(chords[i].getRoot()), new Intervals(next));
+			if (key.equals("C") || key.equals("Db") || key.equals("D") || key.equals("Eb") || key.equals("E") ||
+				key.equals("Cmin") || key.equals("Dbmin") || key.equals("Dmin") || key.equals("Ebmin") || key.equals("Emin")) { //transpose down to sound better
+				chord.setBassNote(chord.getRoot().changeValue(-12));
+			} else {
+				chord.setBassNote(chord.getRoot().changeValue(-24));
+			}
+			System.out.println(chord.toNoteString());
+			lastIntervals = next;
+			p.add(chord);
+		}
+		//player.play(p); 
 		
-		
-		/*String bass = generateBass();
-		String soprano = generateSoprano();
-		String alto = generateAlto();
-		String tenor = generateTenor();
-		
-		
-		String song = soprano + alto + tenor + bass;
-		
-		Pattern pattern = new Pattern(song);
+		/*
 		try {
-			MidiFileManager.savePatternToMidi(pattern, new File(filename));
+			MidiFileManager.savePatternToMidi(p, new File("/Users/Ben/Desktop/" + filename + ".midi"));
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
-		}*/
-	}
-	
-	private String generateSoprano() {
-		if (this.melody == null) { //randomly generate
-			
-		} else { //parse melody for errors, if none return it
-			
 		}
-		return "";
+		*/
 	}
 	
-	//THIS WILL BE REPLACED WITH NEW METHOD
-	private String generateAlto() {
-		return "";
-	}
 	
-	private String generateTenor() {
-		return "";
-	}
-	
-	private String generateBass() {
-		return "";
-	}
-	
-	private String addNonharmonic() { //called by each voice, after each note is added
+	//TODO
+	private String addNonharmonics() { //called by each voice, after each note is added
 		return "";
 	}
 	
@@ -275,6 +269,98 @@ public class SongGenerator {
 		return stacatto.trim();
 	}
 	
+	private String findBestIntervals(String lastIntervals, Chord c) { //c is current chord to be generated
+		 ArrayList<Integer> validNums = new ArrayList<Integer>();
+		 for (int x = 3; x <= 15; x++) { //TODO: should be 24, but can't go above 15
+			 if (x%7  == 1 || x%7  == 3 || x%7  == 5) {
+				 validNums.add(x);
+			 }
+		 }
+		 genCombosAndOrder(validNums, 3); //THIS GIVES THE LAST 3 NUMS OF INTERVAL
+		 String interval = "";
+		 if (c.isMajor()) { //determine the best of the possible intervals
+			 if (lastIntervals == null) {
+				 if (Math.random() < .5) {
+					 interval = "1 5 8 10";
+				 } else {
+					 interval = "1 3 8 12";
+				 }
+			 }
+			 else {
+				 String lastIntervalsTemp = lastIntervals.replace("b", ""); //for extracting the last intervals
+				 ArrayList<Integer> lastIntervalsNums = comboCollectionNums.get(comboCollection.indexOf(lastIntervalsTemp.substring(2)));
+				 int quantity = noteToQuantity.get(c.getRoot().toString());
+				 for (int i = 0; i < lastIntervalsNums.size(); i++) { //add chord quantity
+					 
+				 }
+				 
+				 
+				 int randIndex = (int) (Math.random()*(comboCollection.size()-1));
+				 interval = "1 " + comboCollection.get(randIndex);
+				 
+			 }
+		 } else if (c.isMinor()) {
+			 if (lastIntervals == null) {
+				 if (Math.random() < .5) {
+					 interval = "1 5 8 b10";
+				 } else {
+					 interval = "1 b3 8 12";
+				 }
+			 } else {
+				 int randIndex = (int) (Math.random()*(comboCollection.size()-1));
+				 interval = "1 " + comboCollection.get(randIndex);
+				 interval = interval.replaceAll("3", "b3");
+				 interval = interval.replaceAll("10", "b10");
+			 }
+
+		 } else { //for now, must be diminished
+			 if (lastIntervals == null) {
+				 if (Math.random() < .5) {
+					 interval = "1 b5 8 b10";
+				 } else {
+					 interval = "1 b3 8 b12";
+				 }
+			 } else {
+				 int randIndex = (int) (Math.random()*(comboCollection.size()-1));
+				 interval = " 1 " + comboCollection.get(randIndex);
+				 interval = interval.replaceAll(" 5", " b5");
+				 interval = interval.replaceAll(" 12", " b12");
+				 interval = interval.replaceAll(" 3", " b3");
+				 interval = interval.replaceAll(" 10", " b10");
+				 interval = interval.trim();
+			 }
+		 }
+		 return interval;
+	 }
+	
+	private void genCombosAndOrder(ArrayList<Integer> set, int r) {
+		 helper(set, new ArrayList<Integer>(), r, 0); //fills combos
+	 }
+	private void helper(ArrayList<Integer> set, ArrayList<Integer> currCombo, int r, int start) {
+		 if (currCombo.size() == r) { //BASE CASE: valid combo, add to list
+			 String x = "";
+			 boolean one = false;
+			 boolean three = false;
+			 boolean five = false;
+			 for (int i = 0; i < r; i++) { //chord must contain at least one of each from {1,3,5}
+				 int element = currCombo.get(i);
+				 if (element == 8 || element == 15) one = true;
+				 else if (element == 3 || element == 10) three = true;
+				 else if (element == 5 || element == 12) five = true;
+				 x += element + " ";
+			 }
+			 if (one && three && five) {
+				 comboCollection.add(x.trim());
+				 comboCollectionNums.add(currCombo);
+			 } //else don't add it
+		 } else {
+			 for (int i = start; i < set.size(); i++) {
+				 currCombo.add(set.get(i));
+				 helper(set, currCombo, r, ++start);
+				 currCombo.remove(currCombo.size()-1);
+			 }
+		 }
+	 }
 	
 	
 	public static void main(String[] args) {
@@ -284,11 +370,9 @@ public class SongGenerator {
 		givencp.add(5);
 		givencp.add(1);
 		
-		ArrayList<String> vchords = new ArrayList<String>();
-		
-		SongGenerator sg = new SongGenerator("Bmin", "100",
-											"","","","", vchords,
-											givencp, null, null);
+		SongGenerator sg = new SongGenerator("C", "100", //key & tempo
+											"","","","",   //instruments
+											givencp, "mySong");//given cp & filename
 		
 	}
 }
