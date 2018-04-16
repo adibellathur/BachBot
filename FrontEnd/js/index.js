@@ -128,8 +128,8 @@ function loadProfileContent() {
           + "Play <i class=\"fa fa-play\"> </i></button>";
     // html += "<button type=\"button\" id=\"button_stop\" class=\"btn btn btn-primary btn-lg\" onclick=\"buttonStopPress()\">"
     //       + "Pause <i class=\"fa fa-stop\"></i></button></td>";
-    html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"buttonSavePress()\">"
-          + "<i>Save</i></button>";
+    html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"buttonRemovePress()\">"
+          + "<i>Remove</i></button>";
     html += "</tr>"
   }
   document.getElementById("profile-saved-songs").innerHTML = html;
