@@ -3,10 +3,8 @@ package queries;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,37 +14,33 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import model.*;
+import model.util;
 
-@WebServlet("/addFollowing")
-public class addFollowing extends HttpServlet {
+@WebServlet("/addFavorite")
+public class addFavorite extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String following = request.getParameter("following");
-		
 		Connection conn = null;
 		Statement st = null;
+		
+		String username = request.getParameter("username");
+		String title = request.getParameter("title");
+		String composer = request.getParameter("composer");
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			
+			int songId = util.getSongId(title, composer, conn);
 			int userId = util.getUserId(username, conn);
-			int followingId = util.getUserId(following, conn);
 			
-			System.out.println("userId: " + userId);
-			System.out.println("followingId: " + followingId);
+			boolean favoriteExists = util.alreadyFavorite(userId, songId, conn);
 			
-			boolean alreadyExists = util.alreadyFollowing(userId, followingId, conn);
-			
-			if(!alreadyExists) {
+			if(!favoriteExists) {
 				st = conn.createStatement();
-				st.executeUpdate("INSERT INTO following (user_id, following_id) \r\n" + 
-						"	VALUES(" + userId + ", " + followingId + ");");
-				st.executeUpdate("INSERT INTO followers (user_id, follower_id) \r\n" + 
-						"	VALUES(" + followingId + ", " + userId + ");");
+				st.executeUpdate("INSERT INTO favorites(user_id, song_id)\r\n" + 
+						"	VALUES(" + userId + ", " + songId + ");");
 				response.getWriter().write(new Gson().toJson(true));
 			} else {
 				response.getWriter().write(new Gson().toJson(false));

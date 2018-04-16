@@ -52,8 +52,6 @@ public class generateSongs extends HttpServlet {
 			String tempFileName = fileName + i;
 			executors.execute(new SongGeneratorThread(key, tempo, soprano, alto, tenor, bass, chords, tempFilePath));
 			songs.add(new Song(title, tempFileName, username, 0));
-			
-			//INPUTS: String key
 		}
 		executors.shutdown();
 		while(!executors.isTerminated()) {

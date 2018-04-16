@@ -10,7 +10,7 @@
 	<script>
 		window.onload = function(){
 			var xhttp = new XMLHttpRequest();
-			xhttp.open("GET", "signup?username=Kathy&password=Kathy&imageUrl=somethin", false);
+			xhttp.open("GET", "addFollowing?username=Ben&following=Russell", false);
 			xhttp.send();
 			var response = xhttp.responseText;
 			document.querySelector("#test").innerHTML = response;
