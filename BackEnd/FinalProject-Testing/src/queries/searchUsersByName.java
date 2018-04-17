@@ -41,10 +41,11 @@ public class searchUsersByName extends HttpServlet {
 					"	ORDER BY num_followers DESC;");
 			while(rs.next()) {
 				String username = rs.getString("username");
+				int userId = rs.getInt("id");
 				String imageUrl = rs.getString("image_url");
 				int numFollowers = rs.getInt("num_followers");
 				System.out.println(username + "\t" + imageUrl);
-				users.add(new User(username, imageUrl, numFollowers));
+				users.add(new User(username, userId, imageUrl, numFollowers));
 			}
 			
 			String json = new Gson().toJson(users);

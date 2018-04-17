@@ -24,7 +24,7 @@ public class addFavorite extends HttpServlet {
 		Connection conn = null;
 		Statement st = null;
 		
-		String username = request.getParameter("username");
+		int userId = Integer.parseInt(request.getParameter("userId"));
 		String title = request.getParameter("title");
 		String composer = request.getParameter("composer");
 		
@@ -33,7 +33,6 @@ public class addFavorite extends HttpServlet {
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			
 			int songId = util.getSongId(title, composer, conn);
-			int userId = util.getUserId(username, conn);
 			
 			boolean favoriteExists = util.alreadyFavorite(userId, songId, conn);
 			

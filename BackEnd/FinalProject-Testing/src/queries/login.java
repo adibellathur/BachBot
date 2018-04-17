@@ -25,6 +25,7 @@ public class login extends HttpServlet {
 		ResultSet rs = null;
 		
 		String password = null;
+		int userId = 0;
 		String username = null;
 		String imageUrl = null;
 		
@@ -43,11 +44,12 @@ public class login extends HttpServlet {
 				if(password != null && password.equals(request.getParameter("password"))) {
 					success = true;
 					username = rs.getString("username");
+					userId = rs.getInt("id");
 					imageUrl = rs.getString("image_url");
 				}
 			}
 			
-			UserBool returnUser = new UserBool(success, new User(username, imageUrl, 0));
+			UserBool returnUser = new UserBool(success, new User(username, userId, imageUrl, 0));
 			
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");

@@ -49,7 +49,7 @@ public class generateSongs extends HttpServlet {
 		
 		for(int i = 0 ; i < 6; i++) {
 			String tempFilePath = getServletContext().getRealPath("") + "/" + fileName + i;
-			String tempFileName = fileName + i;
+			String tempFileName = fileName + i + ".midi";
 			executors.execute(new SongGeneratorThread(key, tempo, soprano, alto, tenor, bass, chords, tempFilePath));
 			songs.add(new Song(title, tempFileName, username, 0));
 		}

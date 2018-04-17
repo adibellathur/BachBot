@@ -16,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import model.ProfileDetails;
-import model.Song;
+import model.*;
 
 @WebServlet("/getSongsOfUser")
 public class getSongsOfUser extends HttpServlet {

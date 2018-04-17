@@ -66,8 +66,9 @@ public class signup extends HttpServlet {
 				while(rs.next()) {
 					password = rs.getString("password");
 					username = rs.getString("username");
+					int userId = rs.getInt("id");
 					imageUrl = rs.getString("image_url");
-					user = new User(username, imageUrl, 0);
+					user = new User(username, userId, imageUrl, 0);
 				}
 			}
 			UserBool returnUser = new UserBool(exists, user);

@@ -3,10 +3,8 @@ package queries;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +21,7 @@ public class addFollowing extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
+		int userId = Integer.parseInt(request.getParameter("userId"));
 		String following = request.getParameter("following");
 		
 		Connection conn = null;
@@ -33,11 +31,7 @@ public class addFollowing extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			
-			int userId = util.getUserId(username, conn);
 			int followingId = util.getUserId(following, conn);
-			
-			System.out.println("userId: " + userId);
-			System.out.println("followingId: " + followingId);
 			
 			boolean alreadyExists = util.alreadyFollowing(userId, followingId, conn);
 			
