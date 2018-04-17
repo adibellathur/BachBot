@@ -48,6 +48,7 @@ function loadBrowse() {
 }
 
 function loadBrowseContent() {
+  // Get Top Users
   $.ajax({
     url: 'http://localhost:8080/CSCI201-FinalProject/getAllUsers',
     data: {
@@ -58,21 +59,35 @@ function loadBrowseContent() {
     },
     dataType: 'json',
     success: function(data) {
-      document.getElementById("top-users-1").innerHTML = "";
-      document.getElementById("top-users-2").innerHTML  = "";
+      // document.getElementById("top-users-1").innerHTML = "";
+      // document.getElementById("top-users-2").innerHTML  = "";
+      document.getElementById("browse-top-users").innerHTML = "";
+      var html = "";
       for(var i=0 ; i<data.length && i < 10 ; i++) {
         var user = data[i];
-        //console.log(user.name);
-        if(i / 5 < 1) {
-          document.getElementById("top-users-1").innerHTML += "<li class=\"list-group-item\"><p>" + (i+1) + ". " + user.username + "</p></li>";
-        } else {
-          document.getElementById("top-users-2").innerHTML += "<li class=\"list-group-item\"><p>" + (i+1) + ". " + user.username + "</p></li>";
-        }
+        html += "<div class=\"row\">";
+        html +=   "<div class=\"col-sm-2\">";
+        html +=     "<h4>" + (i+1) + ". </h4>";
+        html +=   "</div>";
+        html +=   "<div class=\"col-sm-2 justify-content-center\">"
+        html +=     "<img src=\"" + data[i].imageUrl + "\" class=\"results-img\"></img>"
+        html +=   "</div>"
+        html +=   "<div class=\"col-sm-4\">";
+        html +=     "<a href=\"#\" onClick=\"visitUserPage(" + data[i].userid + ")\"><h4>" + data[i].username + "</h4></a>";
+        html +=   "</div>";
+        html += "</div>";
+        // if(i / 5 < 1) {
+        //   document.getElementById("top-users-1").innerHTML += "<li class=\"list-group-item\"><p>" + (i+1) + ". " + user.username + "</p></li>";
+        // } else {
+        //   document.getElementById("top-users-2").innerHTML += "<li class=\"list-group-item\"><p>" + (i+1) + ". " + user.username + "</p></li>";
+        // }
       }
+      document.getElementById("browse-top-users").innerHTML += html;
     },
     type: 'GET'
   });
 
+  // Get Top Songs
   $.ajax({
     url: 'http://localhost:8080/CSCI201-FinalProject/getTopSongs',
     error: function() {

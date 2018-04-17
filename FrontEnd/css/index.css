@@ -1,7 +1,8 @@
 html,body {
   height: 100%;
   background-color: #505262;  /*#2b2e38;*/
-  color: white;
+  color: #eee;
+  font-style: italic;
 }
 
 h1 {
@@ -133,4 +134,10 @@ li {
 
 .form-control:focus {
   color: white;
+}
+
+.results-img {
+  height: 4em;
+  width: 4em;
+  border-radius: 50%;
 }
