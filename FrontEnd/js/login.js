@@ -42,6 +42,7 @@ function validateForm() {
           valid = true;
           store.set("username", data.user.username);
           store.set("userimage", data.user.imageUrl);
+          store.set("userid", data.user.userId);
         }
       },
       type: 'POST',
