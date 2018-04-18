@@ -39,11 +39,14 @@ public class getDetailsOfUser extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			st = conn.createStatement();
+			
+			int targetId = util.getUserId(target, conn);
+			
 			rs = st.executeQuery("SELECT users.username, COUNT(*) AS num_following\r\n" + 
 					"	FROM following\r\n" + 
 					"	LEFT JOIN users\r\n" + 
 					"		ON users.id=following.user_id\r\n" + 
-					"	WHERE users.id=" + userId + ";");
+					"	WHERE users.id=" + targetId + ";");
 			while(rs.next()) {
 				numFollowing = rs.getInt("num_following");
 			}
@@ -53,7 +56,7 @@ public class getDetailsOfUser extends HttpServlet {
 					"	FROM followers\r\n" + 
 					"	LEFT JOIN users\r\n" + 
 					"		ON users.id=followers.user_id\r\n" + 
-					"	WHERE users.id=" + userId + ";");
+					"	WHERE users.id=" + targetId + ";");
 			while(rs.next()) {
 				numFollowers = rs.getInt("num_followers");
 			}
@@ -63,7 +66,7 @@ public class getDetailsOfUser extends HttpServlet {
 					"	FROM songs\r\n" + 
 					"	LEFT JOIN users\r\n" + 
 					"		ON users.id=songs.user_id\r\n" + 
-					"	WHERE users.id=" + userId + ";");
+					"	WHERE users.id=" + targetId + ";");
 			while(rs.next()) {
 				numSongs = rs.getInt("num_songs");
 			}
@@ -77,7 +80,14 @@ public class getDetailsOfUser extends HttpServlet {
 			while(rs.next()) {
 				isFollowing = true;
 			}
+			rs.close();
 			
+			rs = st.executeQuery("SELECT *\r\n" + 
+					"	FROM users\r\n" + 
+					"	WHERE users.id=" + targetId + ";");
+			while(rs.next()) {
+				imageUrl = rs.getString("image_url");
+			}
 			
 			
 			String json = new Gson().toJson(new ProfileDetails(numFollowers, numFollowing, numSongs, imageUrl, isFollowing));
