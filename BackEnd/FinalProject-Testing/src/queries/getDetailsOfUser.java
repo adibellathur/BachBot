@@ -25,13 +25,17 @@ public class getDetailsOfUser extends HttpServlet {
 		Connection conn = null;
 		Statement st = null;
 		ResultSet rs = null;
+		
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		String target = request.getParameter("target");
+		
 		int numFollowing = 0;
 		int numFollowers = 0;
 		int numSongs = 0;
 		String imageUrl = null;
+		boolean isFollowing = false;
 		
 		try {
-			System.out.println("here");
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			st = conn.createStatement();
@@ -39,7 +43,7 @@ public class getDetailsOfUser extends HttpServlet {
 					"	FROM following\r\n" + 
 					"	LEFT JOIN users\r\n" + 
 					"		ON users.id=following.user_id\r\n" + 
-					"	WHERE users.username LIKE '" + request.getParameter("username") + "';");
+					"	WHERE users.id=" + userId + ";");
 			while(rs.next()) {
 				numFollowing = rs.getInt("num_following");
 			}
@@ -49,7 +53,7 @@ public class getDetailsOfUser extends HttpServlet {
 					"	FROM followers\r\n" + 
 					"	LEFT JOIN users\r\n" + 
 					"		ON users.id=followers.user_id\r\n" + 
-					"	WHERE users.username LIKE '" + request.getParameter("username") + "';");
+					"	WHERE users.id=" + userId + ";");
 			while(rs.next()) {
 				numFollowers = rs.getInt("num_followers");
 			}
@@ -59,20 +63,24 @@ public class getDetailsOfUser extends HttpServlet {
 					"	FROM songs\r\n" + 
 					"	LEFT JOIN users\r\n" + 
 					"		ON users.id=songs.user_id\r\n" + 
-					"	WHERE users.username LIKE '" + request.getParameter("username") + "';");
+					"	WHERE users.id=" + userId + ";");
 			while(rs.next()) {
 				numSongs = rs.getInt("num_songs");
 			}
 			rs.close();
 			
+			int followingId = util.getUserId(target, conn);
 			rs = st.executeQuery("SELECT *\r\n" + 
-					"	FROM users\r\n" + 
-					"	WHERE users.username LIKE '" + request.getParameter("username") + "'");
+					"	FROM following\r\n" + 
+					"	WHERE following.user_id=" + userId + "\r\n" + 
+					"    AND following.following_id=" + followingId + ";");
 			while(rs.next()) {
-				imageUrl = rs.getString("image_url");
+				isFollowing = true;
 			}
 			
-			String json = new Gson().toJson(new ProfileDetails(numFollowers, numFollowing, numSongs, imageUrl));
+			
+			
+			String json = new Gson().toJson(new ProfileDetails(numFollowers, numFollowing, numSongs, imageUrl, isFollowing));
 			System.out.println(json);
 
 	        response.setContentType("application/json");
