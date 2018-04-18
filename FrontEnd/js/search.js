@@ -38,7 +38,7 @@ function getSearchResults(params) {
           html += "<td>" + data[i].title + "</td>";
           html += "<td><button type=\"button\" id=\"button-play\" class=\"btn btn-primary btn-lg\" onClick=\"MIDIjs.play('" + url + "');\">"
                   + "Play <i class=\"fa fa-play\"> </i></button>";
-          html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"saveSong("+ store.get("userid")+ "," + data[i].title + "," + data[i].path + ")\">"
+          html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"saveSong(\'"+ store.get("userid")+ "\',\'" + data[i].title + "\',\'" + data[i].path + "\')\">"
                   + "<i>Save</i></button>";
           html += "</tr>";
         }

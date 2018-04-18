@@ -139,7 +139,8 @@ function loadProfileContent() {
     url: "http://localhost:8080/CSCI201-FinalProject/getDetailsOfUser",
     data: {
       format: 'json',
-      username: store.get("username")
+      userId: store.get("userid"),
+      target: ""
     },
     error: function() {
       $('#info').html('<p>An error has occurred</p>');
@@ -176,7 +177,7 @@ function loadProfileContent() {
               + "Play <i class=\"fa fa-play\"> </i></button>";
         // html += "<button type=\"button\" id=\"button_stop\" class=\"btn btn btn-primary btn-lg\" onclick=\"buttonStopPress()\">"
         //       + "Pause <i class=\"fa fa-stop\"></i></button></td>";
-        html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"buttonRemovePress()\">"
+        html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"removeSong(\'" + data[i].title + "\')\">"
               + "<i>Remove</i></button>";
         html += "</tr>"
       }
@@ -192,7 +193,8 @@ function loadUserpageContent(username) {
     url: "http://localhost:8080/CSCI201-FinalProject/getDetailsOfUser",
     data: {
       format: 'json',
-      username: username
+      userId: store.get("userid"),
+      target: username
     },
     error: function() {
       $('#info').html('<p>An error has occurred</p>');
@@ -203,7 +205,8 @@ function loadUserpageContent(username) {
       document.getElementById("userpage-followers").innerHTML = data.followers;
       document.getElementById("userpage-following").innerHTML = data.following;
       document.getElementById("userpage-saved").innerHTML = data.songs;
-      document.getElementById("userimage-userpage").src = data.imageUrl;
+      // document.getElementById("userimage-userpage").src = data.imageUrl;
+      document.getElementById("following-userpage-switch").checked = data.isFollowing;
     },
     type: 'GET'
   });
@@ -238,6 +241,61 @@ function loadUserpageContent(username) {
     },
     type: 'GET'
   });
+}
+
+function followChange() {
+  if(document.getElementById("following-userpage-switch").checked === true) {
+    console.log("checked - ready to follow");
+    $.ajax({
+      url: "http://localhost:8080/CSCI201-FinalProject/addFollowing",
+      data: {
+        format: "json",
+        userId: store.get("userid"),
+        following: document.getElementById("username-userpage").innerHTML
+      },
+      error: function() {
+        $('#info').html('<p>An error has occurred</p>');
+      },
+      success: function(data) {
+        console.log("this worked: " + data);
+      },
+      type: "GET"
+    });
+  } else {
+    console.log("not checked - ready to unfollow");
+    $.ajax({
+      url: "http://localhost:8080/CSCI201-FinalProject/removeFollowing",
+      data: {
+        format: "json",
+        userId: store.get("userid"),
+        target: document.getElementById("username-userpage").innerHTML
+      },
+      error: function() {
+        $('#info').html('<p>An error has occurred</p>');
+      },
+      success: function(data) {
+        console.log("this worked: " + data);
+      },
+      type: "GET"
+    });
+  }
+}
+
+function removeSong(title) {
+  console.log("You are about to remove a song");
+  $.ajax({
+    url: "http://localhost:8080/CSCI201-FinalProject/removeSong",
+    data: {
+      format: "json",
+      username: store.get("username"),
+      title: title
+    },
+    error: function() {
+      $('#info').html('<p>An error has occurred</p>');
+    },
+    type: "GET"
+  });
+  loadProfileContent();
 }
 
 function loadUser() {
