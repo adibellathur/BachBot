@@ -13,6 +13,9 @@ function validateDashboard(form) {
   var option2 = document.getElementById("option2").checked;
   var option3 = document.getElementById("option3").checked;
 
+  var title = "CoolAssTitle";
+  var chordProgression = "1 4 5 1";
+
   console.log("key = " + key);
   console.log("tempo = " + tempo);
   console.log("option1 = " + option1);
@@ -27,34 +30,84 @@ function validateDashboard(form) {
     "instrument4": instr4,
     "option1": option1,
     "option2": option2,
-    "option3": option3
+    "option3": option3,
+    "username": store.get("username"),
+    "chordProgression": chordProgression,
+    "title": title
   }
   getMusic(params);
   return false;
 }
 
 function getMusic(params) {
-  console.log(params);
   $.ajax({
-    url: 'http://localhost:8080/CSCI201-FinalProject/allSongs',
-    data: { format: 'json' },
+    url: 'http://localhost:8080/CSCI201-FinalProject/generateSongs',
+    data: {
+      format: 'json',
+      key: params.key,
+      tempo: params.tempo,
+      instrument1: params.instr1,
+      instrument2: params.instr2,
+      instrument3: params.instr3,
+      instrument4: params.instr4,
+      option1: params.option1,
+      option2: params.option2,
+      option3: params.option3,
+      username: params.username,
+      chordProgression: params.chordProgression,
+      title: params.title
+    },
     error: function(xhr, status, err) {
       console.log("ERROR " + status + "YOU MORON: " + err);
     },
     dataType: 'json',
     success: function(data) {
-      // url = "http://localhost:8080/CSCI201-FinalProject/Mii_Channel.mid";
-      url = "http://localhost:8080/CSCI201-FinalProject/Michael_Jackson-Billie_Jean.midi";
-      if(data[0].title == 'Ben1') {
-        console.log(data[0]);
-        document.getElementById("dashboard-results").innerHTML = "<a href=\"#\" onClick=\"MIDIjs.play('" + url + "');\">Play Billie Jean</a>"
-        //playMidi(url);
+      console.log(data);
+      var html = "";
+      // html += "<div class=\"list-group\">"
+      html += "<table class=\"table table-striped\"><tbody>";
+      for(var i=0 ; i<data.length ; i++) {
+        url = "http://localhost:8080/CSCI201-FinalProject/" + data[i].path;
+        html += "<tr>";
+        html += "<td>" + (i+1) + ". </td>";
+        html += "<td>" + data[i].title + "</td>";
+        html += "<td><button type=\"button\" id=\"button-play\" class=\"btn btn-primary btn-lg\" onClick=\"MIDIjs.play('" + url + "');\">"
+                + "Play <i class=\"fa fa-play\"> </i></button>";
+        html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"saveSong("+ store.get("userid")+ "," + data[i].title + "," + data[i].path + ")\">"
+                + "<i>Save</i></button>";
+        html += "</tr>";
+        // html += "<a href=\"#\" class=\"list-group-item waves-effect\" onClick=\"MIDIjs.play('" + url + "');\">";
+        // html += "<h5>" + song.title + "</h5>";
+        // html += "</a>";
+        // html += "<br/>";
       }
+      url = "http://localhost:8080/CSCI201-FinalProject/Michael_Jackson-Billie_Jean.midi";
+      // html += "</div>";
+      html += "</tbody></table>";
+      html += "<a href=\"#\" onClick=\"MIDIjs.play('" + url + "');\">Play Billie Jean</a>";
+
+      document.getElementById("dashboard-results").innerHTML = html;
     },
     type: 'GET'
   });
 }
 
-function playMidi(url){
-  MIDIjs.play(url);
+function saveSong(userid, title, path) {
+  $.ajax({
+    url:"http://localhost:8080/CSCI201-FinalProject/saveSong",
+    data: {
+      format: "json",
+      userId: userid,
+      title: title,
+      url: path
+    },
+    error: function(xhr, status, err) {
+      console.log("ERROR " + status + "YOU MORON: " + err);
+    },
+    dataType: 'json',
+    success: function(data) {
+      console.log("Good Job you did it");
+    },
+    type: 'GET'
+  });
 }
