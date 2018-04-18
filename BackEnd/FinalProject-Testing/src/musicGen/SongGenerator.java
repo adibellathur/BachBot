@@ -15,16 +15,20 @@ import org.jfugue.theory.Note;
 
 public class SongGenerator {
 	//USER INPUT
-	private String key;
-	private String tempo;
+	
 	private String instrumentSoprano;
 	private String instrumentAlto;
 	private String instrumentTenor;
 	private String instrumentBass;
 	private ArrayList<Integer> givenChordProg; //JUST 4 CHORDS
+	
+	/* Not needed at global scope, just used in constructor
+	private String key;
+	private String tempo;
 	private String filename;
 	private boolean allowFirstInversion;
 	private boolean allowSecondInversion;
+	*/
 	
 	//OTHER
 	private ArrayList<String> comboCollection = new ArrayList<String>();
@@ -35,16 +39,11 @@ public class SongGenerator {
 						String instrumentTenor, String instrumentBass,
 						ArrayList<Integer> givenChordProg, String filename,
 						boolean allowFirstInversion, boolean allowSecondInversion) {
-		this.key = key;
-		this.tempo = tempo;
 		this.instrumentSoprano = instrumentSoprano;
 		this.instrumentAlto = instrumentAlto;
 		this.instrumentTenor = instrumentTenor;
 		this.instrumentBass = instrumentBass;
 		this.givenChordProg = new ArrayList<Integer>(givenChordProg);
-		this.filename = filename;
-		this.allowFirstInversion = allowFirstInversion;
-		this.allowSecondInversion = allowSecondInversion;
 		ChordProgression scale = new ChordProgression("I II III IV V VI VII");
 		scale.setKey(key);
 		Chord[] scaleChords = scale.getChords();
@@ -59,10 +58,6 @@ public class SongGenerator {
 		} else {
 			cpstring = toCPString(chordNums, true);
 		}
-		//PRINT CHORD PROGRESSION
-		for (int j = 0; j < chordNums.size(); j++) System.out.print(chordNums.get(j) + " ");
-		System.out.println();
-		//System.out.println("here");
 		
 		int[] beat1 = {0,4,8,12,15,19,23,27};
 		
@@ -103,31 +98,20 @@ public class SongGenerator {
 			if (useStrChord) p.add(strChord);
 			else p.add(chord);
 		}
-		
-		System.out.println("here1");
 		ArrayList<Pattern> voices = set_instruments(p, beat1);
-		System.out.println("here2");
-		
-		System.out.println("voices 0: " + voices.get(0).toString());
-		System.out.println("voices 1: " + voices.get(1).toString());
-		System.out.println("voices 2: " + voices.get(2).toString());
-		System.out.println("voices 3: " + voices.get(3).toString());
 
-		p = voices.get(0).add(voices.get(1)).add(voices.get(2)).add(voices.get(3));
-		
-		
+		Pattern finalSong = voices.get(0).add(voices.get(1)).add(voices.get(2)).add(voices.get(3));
+		finalSong.setTempo(Integer.parseInt(tempo));
 		//player.play(finalSong); 
-
+		
 		try {
-			System.out.println("saving");
-			MidiFileManager.savePatternToMidi(p, new File(filename + ".midi"));
+			MidiFileManager.savePatternToMidi(finalSong, new File(filename + ".midi"));
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
+		
 	}
 	
-	
-	//TODO
 	private ArrayList<Pattern> set_instruments(Pattern p, int[] beat1) { //called by each voice, after each note is added
 		ArrayList<Pattern> voices = new ArrayList<Pattern>();
 		voices.add(new Pattern().setVoice(0).setInstrument(instrumentSoprano));
@@ -169,15 +153,15 @@ public class SongGenerator {
 				soprano = soprano.replace("(","");
 				soprano = soprano.replace(")","");
 				soprano = soprano.replace("h","");
-				alto = soprano.replace("(","");
-				alto = soprano.replace(")","");
-				alto = soprano.replace("h","");
-				tenor = soprano.replace("(","");
-				tenor = soprano.replace(")","");
-				tenor = soprano.replace("h","");
-				bass = soprano.replace("(","");
-				bass = soprano.replace(")","");
-				bass = soprano.replace("h","");
+				alto = alto.replace("(","");
+				alto = alto.replace(")","");
+				alto = alto.replace("h","");
+				tenor = tenor.replace("(","");
+				tenor = tenor.replace(")","");
+				tenor = tenor.replace("h","");
+				bass = bass.replace("(","");
+				bass = bass.replace(")","");
+				bass = bass.replace("h","");
 				voices.get(0).add("(" + soprano + ")h");
 				voices.get(1).add("(" + alto + ")h");
 				voices.get(2).add("(" + tenor + ")h");
@@ -188,18 +172,15 @@ public class SongGenerator {
 				voices.get(2).add(tenor);
 				voices.get(3).add(bass);
 			}
-			
 			soprano = "";
 			alto = "";
 			tenor = "";
 			bass = "";
 		}
-		
-		
 		return voices;
 	}
 	
-	private ArrayList<Integer> generateChordProgression() { //TODO: generate entire chord progression
+	private ArrayList<Integer> generateChordProgression() {
 		ArrayList<Integer> songChords = new ArrayList<Integer>(); //contains numbers representing chords
 		if (givenChordProg.size() == 0) { //randomly generate
 			
@@ -328,7 +309,7 @@ public class SongGenerator {
 		return randProg;
 	}
 	
-	private String toCPString(ArrayList<Integer> chordNums, boolean isMajor) { //TODO: 7th chords
+	private String toCPString(ArrayList<Integer> chordNums, boolean isMajor) {
 		String stacatto = "";
 		for (int i = 0; i < chordNums.size(); i++) {
 			if (isMajor) {
@@ -371,7 +352,7 @@ public class SongGenerator {
 	
 	private String findBestIntervals(String lastIntervals, Chord c) { //c is current chord to be generated
 		 ArrayList<Integer> validNums = new ArrayList<Integer>();
-		 for (int x = 3; x <= 12; x++) { //TODO: should be 24, but can't go above 15
+		 for (int x = 3; x <= 12; x++) {
 			 if (x%7  == 1 || x%7  == 3 || x%7  == 5) {
 				 validNums.add(x);
 			 }
@@ -453,7 +434,6 @@ public class SongGenerator {
 		 }
 	 }
 	
-	
 	public static void main(String[] args) {
 		ArrayList<Integer> givencp = new ArrayList<Integer>();
 		givencp.add(4);
@@ -461,7 +441,8 @@ public class SongGenerator {
 		givencp.add(5);
 		givencp.add(1);
 		
-		SongGenerator sg = new SongGenerator("C#min", "100", //key & tempo
+		@SuppressWarnings("unused")
+		SongGenerator sg = new SongGenerator("E", "110", //key & tempo
 											"PIANO","PIANO","PIANO","PIANO",   //instruments
 											givencp, "mySong", //given cp & filename
 											true, true); //first and second inversions

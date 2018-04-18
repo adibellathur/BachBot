@@ -36,6 +36,5 @@ public class SongGeneratorThread extends RecursiveAction {
 											instrumentSoprano, instrumentAlto, instrumentTenor, instrumentBass,   
 											givenChordProg, filename,
 											firstInversionAllowed, secondInversionAllowed);
-		System.out.println("constructor finished");
 	}
 }
