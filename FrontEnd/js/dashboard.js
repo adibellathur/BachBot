@@ -109,19 +109,19 @@ function saveSong(userid, songtitle, path) {
   });
 }
 
-function removeSong(userid, songtitle, path) {
-  console.log(userid + songtitle + path);
-  $.ajax({
-    url:"http://localhost:8080/CSCI201-FinalProject/saveSong",
-    data: {
-      format: "json",
-      userId: userid,
-      title: songtitle,
-      url: path
-    },
-    error: function(xhr, status, err) {
-      console.log("ERROR " + status + "YOU MORON: " + err);
-    },
-    type: 'GET'
-  });
-}
+// function removeSong(userid, songtitle, path) {
+//   console.log(userid + songtitle + path);
+//   $.ajax({
+//     url:"http://localhost:8080/CSCI201-FinalProject/saveSong",
+//     data: {
+//       format: "json",
+//       userId: userid,
+//       title: songtitle,
+//       url: path
+//     },
+//     error: function(xhr, status, err) {
+//       console.log("ERROR " + status + "YOU MORON: " + err);
+//     },
+//     type: 'GET'
+//   });
+// }

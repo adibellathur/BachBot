@@ -176,7 +176,7 @@ function loadProfileContent() {
               + "Play <i class=\"fa fa-play\"> </i></button>";
         // html += "<button type=\"button\" id=\"button_stop\" class=\"btn btn btn-primary btn-lg\" onclick=\"buttonStopPress()\">"
         //       + "Pause <i class=\"fa fa-stop\"></i></button></td>";
-        html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"buttonRemovePress()\">"
+        html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"removeSong(\'" + data[i].title + "\')\">"
               + "<i>Remove</i></button>";
         html += "</tr>"
       }
@@ -243,4 +243,29 @@ function loadUserpageContent(username) {
 function loadUser() {
   document.getElementById("userimage").src = store.get("userimage");  //userdata.userimage;
   document.getElementById("username").innerHTML = store.get("username");  //userdata.username;
+}
+
+function removeSong(title) {
+  console.log("You are about to remove a song");
+  $.ajax({
+    url: "http://localhost:8080/CSCI201-FinalProject/removeSong",
+    data: {
+      format: "json",
+      username: store.get("username"),
+      title: title
+    },
+    error: function() {
+      $('#info').html('<p>An error has occurred</p>');
+    },
+    type: "GET"
+  });
+  loadProfileContent();
+}
+
+function followChange() {
+  if(document.getElementById("following-userpage-switch").checked === true) {
+    console.log("checked - ready to follow");
+  } else {
+    console.log("not checked - ready to unfollow");
+  }
 }
