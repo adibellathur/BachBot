@@ -8,5 +8,6 @@ public class ProfileDetails {
 		this.followers = followers;
 		this.following = following;
 		this.songs = songs;
+		this.imageUrl = imageUrl;
 	}
 }

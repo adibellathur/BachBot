@@ -31,6 +31,7 @@ public class getDetailsOfUser extends HttpServlet {
 		String imageUrl = null;
 		
 		try {
+			System.out.println("here");
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			st = conn.createStatement();
@@ -72,6 +73,7 @@ public class getDetailsOfUser extends HttpServlet {
 			}
 			
 			String json = new Gson().toJson(new ProfileDetails(numFollowers, numFollowing, numSongs, imageUrl));
+			System.out.println(json);
 
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
