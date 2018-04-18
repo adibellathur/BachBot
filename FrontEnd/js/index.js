@@ -3,11 +3,9 @@
   Handles window interaction and moving between pages,
   as well as persistent storage of useful data
 */
-
-//Run this on startup
 const Store = require('electron-store');
 const store = new Store();
-var userdata = require(__dirname + "/user.json");
+// var userdata = require(__dirname + "/user.json");
 
 
 window.onload = start;

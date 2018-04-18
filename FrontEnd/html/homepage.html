@@ -41,7 +41,7 @@
         <a href="signup.html" class="btn btn-primary btn-lg">
         <center><p style="font-size: 30px; margin-top: 5px; margin-bottom:5px; margin-left:10px; margin-right:10px;">Sign Up</p></center>
         </a>
-        <a href="#" class="btn btn-primary btn-lg">
+        <a href="index.html" class="btn btn-primary btn-lg">
         <center><p style="font-size: 30px; margin-top: 5px; margin-bottom:5px; margin-left:10px;">Guest</p></center>
         </a>
     </div>
@@ -53,6 +53,14 @@
           // If you want module.exports to be empty, uncomment:
           // module.exports = {};
       } catch(e) {}
+    </script>
+    <script>
+      const Store = require('electron-store');
+      const store = new Store();
+
+      store.set("username", dir="Guest");
+      store.set("userimage", "../image/guest.png");
+      store.set("userid", 0);
     </script>
     <!-- <script type="text/javascript" src="../js/login.js"></script> -->
   </body>

@@ -265,8 +265,12 @@
                       <h2>Dashboard</h2>
                       <div class="row" id="form">
                         <div class="col-sm-4 justify-content-center">
-                          <h6 style="text-align: center;">Enter Key Signature</h6>
+                          <h6 style="text-align: center; color: red;">Enter Title</h6>
                           <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
+                            <input type="text" class="form-control" id="song-title" placeholder="Title" style="text-align: center">
+                          </div>
+                          <h6 style="text-align: center;">Enter Key Signature</h6>
+                          <div class="md-form form-lg" style="margin-left: 10%; width: 80%;">
                             <input type="text" class="form-control" id="key-signature" placeholder="Key" style="text-align: center">
                           </div>
                           <h6 style="text-align: center;">Enter Tempo</h6>
@@ -275,16 +279,17 @@
                           </div>
                         </div>
                         <div class="col-sm-4">
-                          <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
+                          <h6>Instruments:</h6>
+                          <div class="md-form form-lg" style="margin-left: 5%; width: 80%;">
                             <input type="text" class="form-control" id="instr1" placeholder="Instrument 1" style="text-align: center">
                           </div>
-                          <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
+                          <div class="md-form form-lg" style="margin-left: 5%; width: 80%;">
                             <input type="text" class="form-control" id="instr2" placeholder="Instrument 2" style="text-align: center">
                           </div>
-                          <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
+                          <div class="md-form form-lg" style="margin-left: 5%; width: 80%;">
                             <input type="text" class="form-control" id="instr3" placeholder="Instrument 3" style="text-align: center">
                           </div>
-                          <div class="md-form form-lg" style="margin-left: 25%; width: 50%;">
+                          <div class="md-form form-lg" style="margin-left: 5%; width: 80%;">
                             <input type="text" class="form-control" id="instr4" placeholder="Instrument 4" style="text-align: center">
                           </div>
                         </div>
@@ -311,7 +316,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="row justify-content-center">
+                      <div class="row justify-content-center" style="margin-top: 2em;">
                         <button class="btn btn-primary" id="button" type="submit">Submit</button>
                       </div>
                     </form>
@@ -425,7 +430,7 @@
                       <h2 id="username-userpage"></h2>
                     </div>
                     <div class="col-sm-4 justify-content-end">
-                      <div class="switch" id="following-userpage">
+                      <div class="switch" id="following-userpage" style="margin-top: 10%;">
                         <label>
                           <input type="checkbox" id="following-userpage-switch" onclick="followChange();">
                           <span class="lever"></span>
