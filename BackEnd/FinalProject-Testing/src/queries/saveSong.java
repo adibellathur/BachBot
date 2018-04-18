@@ -13,15 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.*;
-
 @WebServlet("/saveSong")
 public class saveSong extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//need title, username, url
-		String username = request.getParameter("username");
+		int userId = Integer.parseInt(request.getParameter("userId"));
 		String title = request.getParameter("title");
 		String url = request.getParameter("url"); //WITHOUT THE LOCAL HOST. ONLY NEED THE FILE NAME
 		
@@ -32,8 +30,6 @@ public class saveSong extends HttpServlet {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
-			
-			int userId = util.getUserId(username, conn);
 			
 			st = conn.createStatement();
 			st.executeUpdate("INSERT INTO songs(title, user_id, path)\r\n" + 

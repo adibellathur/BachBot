@@ -1,5 +1,8 @@
-1. Sign Up
+DONE 1. Sign Up
 DONE 2. Get All info of user. this is for user profile page. Songs, followers, following, number of songs.
 DONE 3. get songs of user. composer, title, url to play
-4. add followers
-5. add favorite
+Kinda? Double check if it already exists 4. add followers
+DONE 5. add favorite
+6. Remove song. remove the song from database, remove all favorites
+7. unfavorite
+8. unfollow

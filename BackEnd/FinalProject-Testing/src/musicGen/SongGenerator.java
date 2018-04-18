@@ -23,21 +23,18 @@ public class SongGenerator {
 	private String instrumentBass;
 	private ArrayList<Integer> givenChordProg; //JUST 4 CHORDS
 	private String filename;
+	private boolean allowFirstInversion;
+	private boolean allowSecondInversion;
 	
 	//OTHER
 	private ArrayList<String> comboCollection = new ArrayList<String>();
 	private ArrayList<ArrayList<Integer> > comboCollectionNums = new ArrayList<ArrayList<Integer> >();
 	private HashMap<String, Integer> noteToQuantity = new HashMap<String, Integer>();
 	
-	public SongGenerator()  { //default configurations
-		ArrayList<Integer> test = generateChordProgression();
-		for (int j = 0; j < test.size(); j++) System.out.print(test.get(j) + " ");
-		System.out.println();
-	}
-	
 	public SongGenerator(String key, String tempo, String instrumentSoprano, String instrumentAlto,
 						String instrumentTenor, String instrumentBass,
-						ArrayList<Integer> givenChordProg, String filename) {
+						ArrayList<Integer> givenChordProg, String filename,
+						boolean allowFirstInversion, boolean allowSecondInversion) {
 		this.key = key;
 		this.tempo = tempo;
 		this.instrumentSoprano = instrumentSoprano;
@@ -46,6 +43,8 @@ public class SongGenerator {
 		this.instrumentBass = instrumentBass;
 		this.givenChordProg = new ArrayList<Integer>(givenChordProg);
 		this.filename = filename;
+		this.allowFirstInversion = allowFirstInversion;
+		this.allowSecondInversion = allowSecondInversion;
 		ChordProgression scale = new ChordProgression("I II III IV V VI VII");
 		scale.setKey(key);
 		Chord[] scaleChords = scale.getChords();
@@ -64,41 +63,134 @@ public class SongGenerator {
 		for (int j = 0; j < chordNums.size(); j++) System.out.print(chordNums.get(j) + " ");
 		System.out.println();
 		
+		int[] beat1 = {0,4,8,12,15,19,23,27};
+		
 		Player player = new Player(); 
 		Pattern p = new Pattern();
 		ChordProgression cp = new ChordProgression(cpstring);
 		cp.setKey(key);
-		//notesInKey = getNotesInKey(key);
 		Chord[] chords = cp.getChords();
 		String lastIntervals = null;
 		for (int i = 0; i < chords.length; i++) {
 			String next = findBestIntervals(lastIntervals, chords[i]);
 			Chord chord = new Chord(new Note(chords[i].getRoot()), new Intervals(next));
-			if (key.equals("C") || key.equals("Db") || key.equals("D") || key.equals("Eb") || key.equals("E") ||
-				key.equals("Cmin") || key.equals("Dbmin") || key.equals("Dmin") || key.equals("Ebmin") || key.equals("Emin")) { //transpose down to sound better
-				chord.setBassNote(chord.getRoot().changeValue(-12));
-			} else {
+			if (key.contains("Ab") || key.contains("A") || key.contains("Bb") || key.contains("B")) { //transpose down to sound better
 				chord.setBassNote(chord.getRoot().changeValue(-24));
+			} else {
+				chord.setBassNote(chord.getRoot().changeValue(-12));
 			}
-			System.out.println(chord.toNoteString());
+			double random = Math.random();
+			if (allowFirstInversion && random < .3) {
+				chord.setInversion(1);
+			} else if (allowSecondInversion && random < .45 && random >= .3){
+				chord.setInversion(2);
+			}
 			lastIntervals = next;
-			p.add(chord);
+			boolean useStrChord = false; //for strange bug purposes
+			String strChord = chord.toNoteString();
+			if (i == 14 || i == 29) { //convert to half note
+				strChord += "h";
+				useStrChord = true;
+			} 
+			for (int j = 0; j < beat1.length; j++) {
+				if (i == beat1[j]) { // add note velocity
+					strChord += "a75d100";
+					useStrChord = true;
+					break;
+				}
+			}
+			if (useStrChord) p.add(strChord);
+			else p.add(chord);
 		}
-		//player.play(p); 
+		ArrayList<Pattern> voices = set_instruments(p, beat1);
 		
-		
+		System.out.println(voices.get(0).toString());
+		System.out.println(voices.get(1).toString());
+		System.out.println(voices.get(2).toString());
+		System.out.println(voices.get(3).toString());
+
+		Pattern finalSong = voices.get(0).add(voices.get(1)).add(voices.get(2)).add(voices.get(3));
+
+		player.play(finalSong); 
+
 		try {
 			MidiFileManager.savePatternToMidi(p, new File(filename + ".midi"));
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-		
 	}
 	
 	
 	//TODO
-	private String addNonharmonics() { //called by each voice, after each note is added
-		return "";
+	private ArrayList<Pattern> set_instruments(Pattern p, int[] beat1) { //called by each voice, after each note is added
+		ArrayList<Pattern> voices = new ArrayList<Pattern>();
+		voices.add(new Pattern().setVoice(0).setInstrument(instrumentSoprano));
+		voices.add(new Pattern().setVoice(1).setInstrument(instrumentAlto));
+		voices.add(new Pattern().setVoice(2).setInstrument(instrumentTenor));
+		voices.add(new Pattern().setVoice(3).setInstrument(instrumentBass));
+		String song = p.toString();
+		String[] tokens = song.split(" ");
+		String soprano = "";
+		String alto = "";
+		String tenor = "";
+		String bass = "";
+		for (int i = 0; i < tokens.length; i++) { //bass up to soprano
+			boolean addedBeatOne = false;
+			boolean adjustForHalfnote = (i == 14 || i == 29);
+			for (int j = 0; j < beat1.length; j++) { //check if beat 1, special case
+				if (i == beat1[j]) {
+					tokens[i] = tokens[i].substring(1);
+					String[] notes = tokens[i].split("\\+");
+					int indexOfCloseParen = notes[3].indexOf(")");
+					String noteInfo = notes[3].substring(indexOfCloseParen + 1);
+					notes[3] = notes[3].substring(0, indexOfCloseParen); //now notes array is ready
+					bass += notes[0] + noteInfo + " ";
+					tenor += notes[1] + noteInfo + " ";
+					alto += notes[2] + noteInfo + " ";
+					soprano += notes[3] + noteInfo + " ";
+					addedBeatOne = true;
+					break;
+				}
+			} //else, not beat 1
+			if (addedBeatOne == false) {
+				String[] notes = tokens[i].split("\\+");
+				bass += notes[0] + " ";
+				tenor += notes[1] + " ";
+				alto += notes[2] + " ";
+				soprano += notes[3] + " ";
+			}
+			if (adjustForHalfnote) {
+				soprano = soprano.replace("(","");
+				soprano = soprano.replace(")","");
+				soprano = soprano.replace("h","");
+				alto = soprano.replace("(","");
+				alto = soprano.replace(")","");
+				alto = soprano.replace("h","");
+				tenor = soprano.replace("(","");
+				tenor = soprano.replace(")","");
+				tenor = soprano.replace("h","");
+				bass = soprano.replace("(","");
+				bass = soprano.replace(")","");
+				bass = soprano.replace("h","");
+				voices.get(0).add("(" + soprano + ")h");
+				voices.get(1).add("(" + alto + ")h");
+				voices.get(2).add("(" + tenor + ")h");
+				voices.get(3).add("(" + bass + ")h");
+			} else {
+				voices.get(0).add(soprano);
+				voices.get(1).add(alto);
+				voices.get(2).add(tenor);
+				voices.get(3).add(bass);
+			}
+			
+			soprano = "";
+			alto = "";
+			tenor = "";
+			bass = "";
+		}
+		
+		
+		return voices;
 	}
 	
 	private ArrayList<Integer> generateChordProgression() { //TODO: generate entire chord progression
@@ -273,7 +365,7 @@ public class SongGenerator {
 	
 	private String findBestIntervals(String lastIntervals, Chord c) { //c is current chord to be generated
 		 ArrayList<Integer> validNums = new ArrayList<Integer>();
-		 for (int x = 3; x <= 15; x++) { //TODO: should be 24, but can't go above 15
+		 for (int x = 3; x <= 12; x++) { //TODO: should be 24, but can't go above 15
 			 if (x%7  == 1 || x%7  == 3 || x%7  == 5) {
 				 validNums.add(x);
 			 }
@@ -289,17 +381,8 @@ public class SongGenerator {
 				 }
 			 }
 			 else {
-				 String lastIntervalsTemp = lastIntervals.replace("b", ""); //for extracting the last intervals
-				 ArrayList<Integer> lastIntervalsNums = comboCollectionNums.get(comboCollection.indexOf(lastIntervalsTemp.substring(2)));
-				 int quantity = noteToQuantity.get(c.getRoot().toString());
-				 for (int i = 0; i < lastIntervalsNums.size(); i++) { //add chord quantity
-					 
-				 }
-				 
-				 
 				 int randIndex = (int) (Math.random()*(comboCollection.size()-1));
-				 interval = "1 " + comboCollection.get(randIndex);
-				 
+				 interval = "1 " + comboCollection.get(randIndex);				 
 			 }
 		 } else if (c.isMinor()) {
 			 if (lastIntervals == null) {
@@ -332,7 +415,7 @@ public class SongGenerator {
 				 interval = interval.trim();
 			 }
 		 }
-		 return interval;
+		 return interval.trim();
 	 }
 	
 	private void genCombosAndOrder(ArrayList<Integer> set, int r) {
@@ -367,23 +450,15 @@ public class SongGenerator {
 	
 	public static void main(String[] args) {
 		ArrayList<Integer> givencp = new ArrayList<Integer>();
-		givencp.add(1);
 		givencp.add(4);
+		givencp.add(2);
 		givencp.add(5);
 		givencp.add(1);
 		
-		SongGenerator sg = new SongGenerator("C", "100", //key & tempo
-											"","","","",   //instruments
-											givencp, "mySong");//given cp & filename
+		SongGenerator sg = new SongGenerator("C#min", "100", //key & tempo
+											"PIANO","PIANO","PIANO","PIANO",   //instruments
+											givencp, "mySong", //given cp & filename
+											true, true); //first and second inversions
 		
 	}
 }
-/*
- * General procedure: have 4 methods, generateSoprano(), generateAlto(), etc. that each return a String which is
- * the Stacatto representation of that voice. In the constructor, call all 4 of these methods and append them.
- * Then send this back to the front-end.
- * The voice methods may need to take in parameters as constraints, however most data is global.
- * 
- * For post-configurations, write methods that handle each task, which take in a Stacatto String and return
- * the resulting Stacatto String
- */

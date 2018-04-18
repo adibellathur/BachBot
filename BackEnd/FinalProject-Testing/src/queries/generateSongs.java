@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,6 +37,9 @@ public class generateSongs extends HttpServlet {
 		String tenor = request.getParameter("instrument3");
 		String bass = request.getParameter("instrument4");
 		
+		boolean firstInversion = Boolean.parseBoolean(request.getParameter("firstInversion"));
+		boolean secondInversion = Boolean.parseBoolean(request.getParameter("secondInversion"));
+		
 		String temp = request.getParameter("chordProgression");
 		System.out.println(temp);
 		//parse temp into arraylist of integeres
@@ -45,18 +49,27 @@ public class generateSongs extends HttpServlet {
 		   chords.add(Integer.parseInt(parts[n]));
 		}
 		
-		ExecutorService executors = Executors.newCachedThreadPool();
+		System.out.println(username + "\t" + title + "\t" + key + "\t" + tempo + "\t" + soprano + "\t" + alto + "\t" + tenor + "\t" + bass + "\t" + temp);
+		ForkJoinPool pool = new ForkJoinPool();
+		//ExecutorService executor = Executors.newCachedThreadPool();
+		
+		long before = System.currentTimeMillis();
 		
 		for(int i = 0 ; i < 6; i++) {
 			String tempFilePath = getServletContext().getRealPath("") + "/" + fileName + i;
 			String tempFileName = fileName + i + ".midi";
-			executors.execute(new SongGeneratorThread(key, tempo, soprano, alto, tenor, bass, chords, tempFilePath));
-			songs.add(new Song(title, tempFileName, username, 0));
+			String titleSpec = title + i;
+			pool.execute(new SongGeneratorThread(key, tempo, soprano, alto, tenor, bass, chords, tempFilePath, firstInversion, secondInversion));
+			//executor.execute(new SongGeneratorThread(key, tempo, soprano, alto, tenor, bass, chords, tempFilePath));)
+			songs.add(new Song(titleSpec, tempFileName, username, 0));
 		}
-		executors.shutdown();
-		while(!executors.isTerminated()) {
+		pool.shutdown();
+		while(!pool.isTerminated()) {
 			Thread.yield();
 		}
+		long after = System.currentTimeMillis();
+		
+		System.out.println("it took: " + (after-before) + " milliseconds");
 		
 		String json = new Gson().toJson(songs);
 

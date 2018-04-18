@@ -1,11 +1,10 @@
 package queries;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,58 +14,42 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import model.Song;
+import model.util;
 
-@WebServlet("/searchSongsByTitle")
-public class searchSongsByTitle extends HttpServlet {
+@WebServlet("/removeSong")
+public class removeSong extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+       
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = request.getParameter("username");
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		String title = request.getParameter("title");
+		
 		Connection conn = null;
 		Statement st = null;
-		ResultSet rs = null;
-		ArrayList<Song> songs = new ArrayList<Song>();
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
-			st = conn.createStatement();
-			rs = st.executeQuery("SELECT songs.*, users.username, COUNT(favorites.song_id) AS favorites\r\n" + 
-					"	FROM songs\r\n" + 
-					"	JOIN users\r\n" + 
-					"		ON users.id=songs.user_id\r\n" + 
-					"	LEFT JOIN favorites\r\n" + 
-					"		ON favorites.song_id=songs.id\r\n" +
-					"	WHERE songs.title LIKE '%" + request.getParameter("search") + "%'\r\n" + 
-					"	GROUP BY songs.id\r\n" + 
-					"	ORDER BY songs.title;");
-			while(rs.next()) {
-				String title = rs.getString("title");
-				String path = rs.getString("path");
-				String username = rs.getString("username");
-				int favorites = rs.getInt("favorites");
-				System.out.println(title + "\t" + path + "\t" + username + "\t" + favorites);
-				songs.add(new Song(title, path, username, favorites));
-			}
 			
-			String json = new Gson().toJson(songs);
-
-	        response.setContentType("application/json");
-	        response.setCharacterEncoding("UTF-8");
-	        response.getWriter().write(json);
-	        
+			int songId = util.getSongId(title, username, conn);
+			st = conn.createStatement();
+			st.executeUpdate("");//delete song from songs
+			st.executeUpdate("");//delete song from favorites
+			
 		} catch (SQLException sqle) {
 			System.out.println("sqle: " + sqle.getMessage());
 		} catch (ClassNotFoundException cnfe) {
 			System.out.println("cnfe: " + cnfe.getMessage());
 		} finally {
 			try {
-				if(rs != null) {rs.close();}
 				if(st != null) {st.close();}
 				if(conn != null) {conn.close();}
 			} catch (SQLException sqle) {
 				System.out.println("sqle:" + sqle.getMessage());
 			}
 		}
+		
 	}
+
 }
