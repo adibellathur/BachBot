@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import model.util;
 
 @WebServlet("/removeSong")
@@ -22,7 +20,6 @@ public class removeSong extends HttpServlet {
        
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
-		int userId = Integer.parseInt(request.getParameter("userId"));
 		String title = request.getParameter("title");
 		
 		Connection conn = null;
@@ -34,8 +31,12 @@ public class removeSong extends HttpServlet {
 			
 			int songId = util.getSongId(title, username, conn);
 			st = conn.createStatement();
-			st.executeUpdate("");//delete song from songs
-			st.executeUpdate("");//delete song from favorites
+			
+			st.executeUpdate("DELETE FROM favorites\r\n" + 
+					"	WHERE song_id=" + songId + ";");//delete song from favorites
+			st.executeUpdate("DELETE FROM songs\r\n" + 
+					"	WHERE id=" + songId + ";");//delete song from songs
+			
 			
 		} catch (SQLException sqle) {
 			System.out.println("sqle: " + sqle.getMessage());

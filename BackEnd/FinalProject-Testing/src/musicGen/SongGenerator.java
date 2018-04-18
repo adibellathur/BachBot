@@ -62,6 +62,7 @@ public class SongGenerator {
 		//PRINT CHORD PROGRESSION
 		for (int j = 0; j < chordNums.size(); j++) System.out.print(chordNums.get(j) + " ");
 		System.out.println();
+		//System.out.println("here");
 		
 		int[] beat1 = {0,4,8,12,15,19,23,27};
 		
@@ -102,18 +103,23 @@ public class SongGenerator {
 			if (useStrChord) p.add(strChord);
 			else p.add(chord);
 		}
-		ArrayList<Pattern> voices = set_instruments(p, beat1);
 		
-		System.out.println(voices.get(0).toString());
-		System.out.println(voices.get(1).toString());
-		System.out.println(voices.get(2).toString());
-		System.out.println(voices.get(3).toString());
+		System.out.println("here1");
+		ArrayList<Pattern> voices = set_instruments(p, beat1);
+		System.out.println("here2");
+		
+		System.out.println("voices 0: " + voices.get(0).toString());
+		System.out.println("voices 1: " + voices.get(1).toString());
+		System.out.println("voices 2: " + voices.get(2).toString());
+		System.out.println("voices 3: " + voices.get(3).toString());
 
-		Pattern finalSong = voices.get(0).add(voices.get(1)).add(voices.get(2)).add(voices.get(3));
-
-		player.play(finalSong); 
+		p = voices.get(0).add(voices.get(1)).add(voices.get(2)).add(voices.get(3));
+		
+		
+		//player.play(finalSong); 
 
 		try {
+			System.out.println("saving");
 			MidiFileManager.savePatternToMidi(p, new File(filename + ".midi"));
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
