@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.util;
+
 @WebServlet("/saveSong")
 public class saveSong extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -31,9 +33,16 @@ public class saveSong extends HttpServlet {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://303.itpwebdev.com/wakugawa_CSCI201_FinalProject", "wakugawa_CSCI201", "wakugawa_CSCI201");
 			
-			st = conn.createStatement();
-			st.executeUpdate("INSERT INTO songs(title, user_id, path)\r\n" + 
-					"	VALUES('" + title + "', " + userId + ", '" + url + "');");
+			if(userId != 0) {
+				boolean alreadySaved = util.alreadySaved(userId, title, conn);
+				
+				if(!alreadySaved) {
+					st = conn.createStatement();
+					st.executeUpdate("INSERT INTO songs(title, user_id, path)\r\n" + 
+							"	VALUES('" + title + "', " + userId + ", '" + url + "');");
+				}
+			}
+			
 		} catch (SQLException sqle) {
 			System.out.println("sqle: " + sqle.getMessage());
 		} catch (ClassNotFoundException cnfe) {

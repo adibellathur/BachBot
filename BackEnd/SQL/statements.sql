@@ -1,5 +1,14 @@
 DELETE FROM favorites
-	WHERE song_id='Ben Song 1';
+	WHERE song_id=1;
     
 SELECT * 
-	FROM favorites;
+	FROM users;
+    
+SELECT *
+	FROM users
+	WHERE users.id=1;
+    
+SELECT *
+	FROM songs
+	WHERE songs.title='CoolAssTitle0'
+    AND songs.user_id=1;

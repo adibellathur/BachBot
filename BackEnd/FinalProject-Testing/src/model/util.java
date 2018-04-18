@@ -126,4 +126,33 @@ public class util {
 		
 		return returnBool;
 	}
+
+	public static boolean alreadySaved(int userId, String title, Connection conn) {
+		Statement st = null;
+		ResultSet rs = null;
+		boolean returnBool = false;
+		
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery("SELECT *\r\n" + 
+					"	FROM songs\r\n" + 
+					"	WHERE songs.title='" + title + "'\r\n" + 
+					"    AND songs.user_id=" + userId + ";");
+			while(rs.next()) {
+				returnBool = true;
+			}
+	        
+		} catch (SQLException sqle) {
+			System.out.println("sqle: " + sqle.getMessage());
+		} finally {
+			try {
+				if(rs != null) {rs.close();}
+				if(st != null) {st.close();}
+			} catch (SQLException sqle) {
+				System.out.println("sqle:" + sqle.getMessage());
+			}
+		}
+		
+		return returnBool;
+	}
 }
