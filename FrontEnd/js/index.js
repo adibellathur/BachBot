@@ -47,6 +47,26 @@ function loadBrowse() {
   loadBrowseContent();
 }
 
+function loadCreate() {
+  console.log("create clicked");
+  sessionStorage.setItem("view", "Create");
+  loadContent();
+}
+
+function loadProfile() {
+  console.log("profile clicked");
+  sessionStorage.setItem("view", "Profile");
+  loadProfileContent();
+  loadContent();
+}
+
+function loadUserpage(username) {
+  console.log("userpage clicked: " + username);
+  sessionStorage.setItem("view", "Userpage");
+  loadUserpageContent(username);
+  loadContent();
+}
+
 function loadBrowseContent() {
   // Get Top Users
   $.ajax({
@@ -73,7 +93,7 @@ function loadBrowseContent() {
         html +=     "<img src=\"" + data[i].imageUrl + "\" class=\"results-img\"></img>"
         html +=   "</div>"
         html +=   "<div class=\"col-sm-4\">";
-        html +=     "<a href=\"#\" onClick=\"visitUserPage(" + data[i].userid + ")\"><h4>" + data[i].username + "</h4></a>";
+        html +=     "<a href=\"#\" onClick=\"loadUserpage(\'" + data[i].username + "\');\"><h4>" + data[i].username + "</h4></a>";
         html +=   "</div>";
         html += "</div>";
         // if(i / 5 < 1) {
@@ -104,7 +124,7 @@ function loadBrowseContent() {
         if(i / 2 < 1) {
           document.getElementById("top-songs-1").innerHTML += "<li class=\"list-group-item\"><h4>" + (i+1) + ". " + "<a href='#' onClick=\"MIDIjs.play('" + url + song.path + "');\">" + song.title + "</a></h4></li>";
         } else {
-          document.getElementById("top-songs-2").innerHTML += "<li class=\"list-group-item\"><h4>" + (i+1) + ". " + song.title + "</h4></li>";
+          document.getElementById("top-songs-2").innerHTML += "<li class=\"list-group-item\"><h4>" + (i+1) + ". " + "<a href='#' onClick=\"MIDIjs.play('" + url + song.path + "');\">" + song.title + "</a></h4></li>";
         }
       }
     },
@@ -112,24 +132,9 @@ function loadBrowseContent() {
   });
 }
 
-function loadCreate() {
-  console.log("create clicked");
-  sessionStorage.setItem("view", "Create");
-  loadContent();
-}
-
-function loadProfile() {
-  console.log("profile clicked");
-  sessionStorage.setItem("view", "Profile");
-  loadProfileContent();
-  loadContent();
-}
-
 function loadProfileContent() {
   document.getElementById("userimage-profile").src = store.get("userimage");
   document.getElementById("username-profile").innerHTML = store.get("username");
-
-
   $.ajax({
     url: "http://localhost:8080/CSCI201-FinalProject/getDetailsOfUser",
     data: {
@@ -179,8 +184,60 @@ function loadProfileContent() {
     },
     type: 'GET'
   });
+}
 
+function loadUserpageContent(username) {
+  document.getElementById("username-userpage").innerHTML = username;
+  $.ajax({
+    url: "http://localhost:8080/CSCI201-FinalProject/getDetailsOfUser",
+    data: {
+      format: 'json',
+      username: username
+    },
+    error: function() {
+      $('#info').html('<p>An error has occurred</p>');
+    },
+    dataType: 'json',
+    success: function(data) {
+      console.log(data);
+      document.getElementById("userpage-followers").innerHTML = data.followers;
+      document.getElementById("userpage-following").innerHTML = data.following;
+      document.getElementById("userpage-saved").innerHTML = data.songs;
+      document.getElementById("userimage-userpage").src = data.imageUrl;
+    },
+    type: 'GET'
+  });
 
+  $.ajax({
+    url: "http://localhost:8080/CSCI201-FinalProject/getSongsOfUser",
+    data: {
+      format: 'json',
+      username: username
+    },
+    error: function() {
+      $('#info').html('<p>An error has occurred</p>');
+    },
+    dataType: 'json',
+    success: function(data) {
+      console.log(data);
+      var html = "";
+      var url = "http://localhost:8080/CSCI201-FinalProject/";
+      for(var i=0 ; i<data.length ; i++) {
+        html += "<tr>";
+        html += "<td>" + (i+1) + ". </td>";
+        html += "<td>" + data[i].title + "</td>";
+        html += "<td><button type=\"button\" id=\"button-play\" class=\"btn btn-primary btn-lg\" onClick=\"MIDIjs.play('" + url + data[i].path + "');\">"
+              + "Play <i class=\"fa fa-play\"> </i></button>";
+        // html += "<button type=\"button\" id=\"button_stop\" class=\"btn btn btn-primary btn-lg\" onclick=\"buttonStopPress()\">"
+        //       + "Pause <i class=\"fa fa-stop\"></i></button></td>";
+        html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"saveSong(\'" + store.get("userid") + "\',\'" + data[i].title + "\',\'" + data[i].path + "\');\">"
+              + "<i>Save</i></button>";
+        html += "</tr>"
+      }
+      document.getElementById("userpage-saved-songs").innerHTML = html;
+    },
+    type: 'GET'
+  });
 }
 
 function loadUser() {

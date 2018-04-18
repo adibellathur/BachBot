@@ -191,16 +191,6 @@
                   <h2>Top Artists</h2>
                   <div class="card">
                     <div class="card-body" id="browse-top-users">
-                      <!-- <div class="row">
-                        <div class="col -sm-6">
-                          <ul class="list-group" id="top-users-1">
-                          </ul>
-                        </div>
-                        <div class="col-sm-6">
-                          <ul class="list-group" id="top-users-2">
-                          </ul>
-                        </div>
-                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -403,6 +393,70 @@
                   <div>
                     <table class="table table-striped">
                       <tbody id="profile-saved-songs">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Userpage Window -->
+            <div class="content" id="Userpage">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h1>Profile</h1>
+                </div>
+                <div class="col-sm-6">
+                  <form class="form-inline  waves-light" id="searchbar" onsubmit="return validateSearch(5)" mdbRippleRadius>
+                    <input class="form-control mr-sm-2" id="searchbar-input-5" type="text" placeholder="Search">
+                    <button class="btn btn-primary" id="button" type="submit">
+                      <i class="fa fa-search"> </i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2.7">
+                  <img class="w3-circle" id="userimage-userpage" width="200" height="200"/>   <!--src="../image/CarolinaVaz-058.jpeg"-->
+                </div>
+                <div class="col-sm-9">
+                  <div class="row">
+                    <h2 id="username-userpage"></h2>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="card" style="margin: 0;">
+                        <div class="card-body">
+                          <h6>Followers: </h6>
+                          <h4 id="userpage-followers"></h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="card" style="margin: 0;">
+                        <div class="card-body">
+                          <h6>Following: </h6>
+                          <h4 id="userpage-following"></h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="card" style="margin: 0;">
+                        <div class="card-body">
+                          <h6>Saved Songs: </h6>
+                          <h4 id="userpage-saved"></h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <h2>Saved Songs</h2>
+                  <div>
+                    <table class="table table-striped">
+                      <tbody id="userpage-saved-songs">
                       </tbody>
                     </table>
                   </div>

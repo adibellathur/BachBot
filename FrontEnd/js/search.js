@@ -71,7 +71,8 @@ function getSearchResults(params) {
           html +=     "<h4>" + (i+1) + "</h4>";
           html +=   "</div>";
           html +=   "<div class=\"col-sm-6\">";
-          html +=     "<a href=\"#\" onClick=\"visitUserPage(" + data[i].userid + ")\"><h4>" + data[i].username + "</h4></a>";
+          console.log("You clicked on username: " + data[i].username);
+          html +=     "<a href=\"#\" onClick=\"loadUserpage(\'" + data[i].username.toLowerCase() + "\');\"><h4>" + data[i].username + "</h4></a>";
           html +=   "</div>";
           html +=   "<div class=\"col-sm-4 justify-content-center\">"
           html +=     "<img src=\"" + data[i].imageUrl + "\" class=\"results-img\"></img>"
