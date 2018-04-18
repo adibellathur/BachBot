@@ -73,7 +73,7 @@ function getMusic(params) {
         html += "<td>" + data[i].title + "</td>";
         html += "<td><button type=\"button\" id=\"button-play\" class=\"btn btn-primary btn-lg\" onClick=\"MIDIjs.play('" + url + "');\">"
                 + "Play <i class=\"fa fa-play\"> </i></button>";
-        html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"saveSong("+ store.get("userid")+ "," + data[i].title + "," + data[i].path + ")\">"
+        html += "<td><button type=\"button\" id=\"button-save\" class=\"btn btn-primary btn-lg\" onclick=\"saveSong(\'"+ store.get("userid")+ "\',\'" + data[i].title + "\',\'" + data[i].path + "\')\">"
                 + "<i>Save</i></button>";
         html += "</tr>";
         // html += "<a href=\"#\" class=\"list-group-item waves-effect\" onClick=\"MIDIjs.play('" + url + "');\">";
@@ -92,21 +92,35 @@ function getMusic(params) {
   });
 }
 
-function saveSong(userid, title, path) {
+function saveSong(userid, songtitle, path) {
+  console.log(userid + songtitle + path);
   $.ajax({
     url:"http://localhost:8080/CSCI201-FinalProject/saveSong",
     data: {
       format: "json",
       userId: userid,
-      title: title,
+      title: songtitle,
       url: path
     },
     error: function(xhr, status, err) {
       console.log("ERROR " + status + "YOU MORON: " + err);
     },
-    dataType: 'json',
-    success: function(data) {
-      console.log("Good Job you did it");
+    type: 'GET'
+  });
+}
+
+function removeSong(userid, songtitle, path) {
+  console.log(userid + songtitle + path);
+  $.ajax({
+    url:"http://localhost:8080/CSCI201-FinalProject/saveSong",
+    data: {
+      format: "json",
+      userId: userid,
+      title: songtitle,
+      url: path
+    },
+    error: function(xhr, status, err) {
+      console.log("ERROR " + status + "YOU MORON: " + err);
     },
     type: 'GET'
   });
