@@ -124,7 +124,7 @@ function loadBrowseContent() {
         if(i / 2 < 1) {
           document.getElementById("top-songs-1").innerHTML += "<li class=\"list-group-item\"><h4>" + (i+1) + ". " + "<a href='#' onClick=\"MIDIjs.play('" + url + song.path + "');\">" + song.title + "</a></h4></li>";
         } else {
-          document.getElementById("top-songs-2").innerHTML += "<li class=\"list-group-item\"><h4>" + (i+1) + ". " + song.title + "</h4></li>";
+          document.getElementById("top-songs-2").innerHTML += "<li class=\"list-group-item\"><h4>" + (i+1) + ". " + "<a href='#' onClick=\"MIDIjs.play('" + url + song.path + "');\">" + song.title + "</a></h4></li>";
         }
       }
     },
