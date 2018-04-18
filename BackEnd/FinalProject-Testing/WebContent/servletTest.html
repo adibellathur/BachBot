@@ -10,7 +10,8 @@
 	<script>
 		window.onload = function(){
 			var xhttp = new XMLHttpRequest();
-			xhttp.open("GET", "getDetailsOfUser?username=Ben", false);
+			xhttp.open("GET", "removeFollowing?userId=1&target=Russell", false);
+			//xhttp.open("GET", "getDetailsOfUser?userId=2&target=", false);
 			//xhttp.open("GET", "generateSongs?title=kickAssSongNewNew&username=Ben&key=C&tempo=100&instrument1=PIANO&instrument2=PIANO&instrument3=PIANO&instrument4=PIANO&chordProgression=1%205%204%202&firstInversion=true&secondInversion=false", false);
 			xhttp.send();
 			var response = xhttp.responseText;
