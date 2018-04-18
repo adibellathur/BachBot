@@ -28,6 +28,7 @@ public class getDetailsOfUser extends HttpServlet {
 		int numFollowing = 0;
 		int numFollowers = 0;
 		int numSongs = 0;
+		String imageUrl = null;
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -61,8 +62,16 @@ public class getDetailsOfUser extends HttpServlet {
 			while(rs.next()) {
 				numSongs = rs.getInt("num_songs");
 			}
+			rs.close();
 			
-			String json = new Gson().toJson(new ProfileDetails(numFollowers, numFollowing, numSongs));
+			rs = st.executeQuery("SELECT *\r\n" + 
+					"	FROM users\r\n" + 
+					"	WHERE users.username LIKE '" + request.getParameter("username") + "'");
+			while(rs.next()) {
+				imageUrl = rs.getString("image_url");
+			}
+			
+			String json = new Gson().toJson(new ProfileDetails(numFollowers, numFollowing, numSongs, imageUrl));
 
 	        response.setContentType("application/json");
 	        response.setCharacterEncoding("UTF-8");
