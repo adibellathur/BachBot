@@ -2,8 +2,6 @@ package queries;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
 
 import javax.servlet.ServletException;
@@ -33,9 +31,21 @@ public class generateSongs extends HttpServlet {
 		System.out.println(key);
 		String tempo = request.getParameter("tempo");
 		String soprano = request.getParameter("instrument1");
+		if(!util.instruments.contains(soprano)) {
+			soprano = "PIANO";
+		}
 		String alto = request.getParameter("instrument2");
+		if(!util.instruments.contains(alto)) {
+			soprano = "PIANO";
+		}
 		String tenor = request.getParameter("instrument3");
+		if(!util.instruments.contains(tenor)) {
+			soprano = "PIANO";
+		}
 		String bass = request.getParameter("instrument4");
+		if(!util.instruments.contains(bass)) {
+			soprano = "PIANO";
+		}
 		
 		boolean firstInversion = Boolean.parseBoolean(request.getParameter("firstInversion"));
 		boolean secondInversion = Boolean.parseBoolean(request.getParameter("secondInversion"));
