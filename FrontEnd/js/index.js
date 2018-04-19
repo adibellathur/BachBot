@@ -138,7 +138,7 @@ function loadProfileContent() {
     data: {
       format: 'json',
       userId: store.get("userid"),
-      target: ""
+      target: store.get("username")
     },
     error: function() {
       $('#info').html('<p>An error has occurred</p>');
@@ -187,6 +187,11 @@ function loadProfileContent() {
 
 function loadUserpageContent(username) {
   document.getElementById("username-userpage").innerHTML = username;
+  if(username.toLowerCase() === store.get("username").toLowerCase()) {
+    document.getElementById("following-userpage").style.display = "none";
+  } else {
+    document.getElementById("following-userpage").style.display = "block";
+  }
   $.ajax({
     url: "http://localhost:8080/CSCI201-FinalProject/getDetailsOfUser",
     data: {

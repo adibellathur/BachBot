@@ -1,6 +1,7 @@
 function validateDashboard(form) {
   //string key, string tempo, string instrument-soprano, string instrument-alto, string chord progression
 
+  var title = document.getElementById("song-title").value;
   var key = document.getElementById("key-signature").value;
   var tempo = document.getElementById("tempo").value;
 
@@ -9,40 +10,40 @@ function validateDashboard(form) {
   var instr3 = document.getElementById("instr3").value;
   var instr4 = document.getElementById("instr4").value;
 
-  var option1 = document.getElementById("option1").checked;
-  var option2 = document.getElementById("option2").checked;
-  var option3 = document.getElementById("option3").checked;
+  var inv1 = document.getElementById("firstInversion").checked;
+  var inv2 = document.getElementById("secondInversion").checked;
+  var chordProgression = document.getElementById("chordProgression").value;
 
-  var title = "CoolAssTitle";
-  var chordProgression = "1 4 5 1";
+  // console.log("key = " + key);
+  // console.log("tempo = " + tempo);
+  // console.log("option1 = " + option1);
+  // console.log("option2 = " + option2);
+  // console.log("option3 = " + option3);
 
-  console.log("key = " + key);
-  console.log("tempo = " + tempo);
-  console.log("option1 = " + option1);
-  console.log("option2 = " + option2);
-  console.log("option3 = " + option3);
   var params = {
+    "username": store.get("username"),
+    "title": title,
     "key": key,
     "tempo": tempo,
-    "instrument1": instr1,
-    "instrument2": instr2,
-    "instrument3": instr3,
-    "instrument4": instr4,
-    "option1": option1,
-    "option2": option2,
-    "option3": option3,
-    "username": store.get("username"),
-    "chordProgression": chordProgression,
-    "title": title
+    "instr1": instr1,
+    "instr2": instr2,
+    "instr3": instr3,
+    "instr4": instr4,
+    "inv1": inv1,
+    "inv2": inv2,
+    "chordProgression": chordProgression
   }
   getMusic(params);
   return false;
 }
 
 function getMusic(params) {
+  console.log(params);
   $.ajax({
     url: 'http://localhost:8080/CSCI201-FinalProject/generateSongs',
     data: {
+      username: params.username,
+      title: params.title,
       format: 'json',
       key: params.key,
       tempo: params.tempo,
@@ -50,12 +51,9 @@ function getMusic(params) {
       instrument2: params.instr2,
       instrument3: params.instr3,
       instrument4: params.instr4,
-      option1: params.option1,
-      option2: params.option2,
-      option3: params.option3,
-      username: params.username,
-      chordProgression: params.chordProgression,
-      title: params.title
+      firstInversion: params.inv1,
+      secondInversion: params.inv2,
+      chordProgression: params.chordProgression
     },
     error: function(xhr, status, err) {
       console.log("ERROR " + status + "YOU MORON: " + err);
@@ -108,20 +106,3 @@ function saveSong(userid, songtitle, path) {
     type: 'GET'
   });
 }
-
-// function removeSong(userid, songtitle, path) {
-//   console.log(userid + songtitle + path);
-//   $.ajax({
-//     url:"http://localhost:8080/CSCI201-FinalProject/saveSong",
-//     data: {
-//       format: "json",
-//       userId: userid,
-//       title: songtitle,
-//       url: path
-//     },
-//     error: function(xhr, status, err) {
-//       console.log("ERROR " + status + "YOU MORON: " + err);
-//     },
-//     type: 'GET'
-//   });
-// }
