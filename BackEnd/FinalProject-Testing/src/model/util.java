@@ -1,15 +1,26 @@
 package model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-
-import com.google.gson.Gson;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class util {
+	
+	public static HashSet<String> instruments = new HashSet<String>(Arrays.asList(	"PIANO", 
+																					"GUITAR",
+																					"XYLOPHONE", 
+																					"ACOUSTIC_BASS", 
+																					"ENGLISH_HORN", 
+																					"TRUMPET", 
+																					"BAGPIPE", 
+																					"FLUTE", 
+																					"BIRD_TWEET", 
+																					"GLOCKENSPIEL", 
+																					"TENOR_SAXAPHONE"));
+	
 	public static int getUserId(String username, Connection conn) {
 		Statement st = null;
 		ResultSet rs = null;
