@@ -203,7 +203,7 @@ function loadUserpageContent(username) {
       document.getElementById("userpage-followers").innerHTML = data.followers;
       document.getElementById("userpage-following").innerHTML = data.following;
       document.getElementById("userpage-saved").innerHTML = data.songs;
-      // document.getElementById("userimage-userpage").src = data.imageUrl;
+      document.getElementById("userimage-userpage").src = data.imageUrl;
       document.getElementById("following-userpage-switch").checked = data.isFollowing;
     },
     type: 'GET'
